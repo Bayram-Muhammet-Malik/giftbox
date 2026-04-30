@@ -3,11 +3,13 @@
 *.local.php
 *.lock
 *.ini
+*.dist
 avatar_*.*
 
 # ---- Dépendances ----
 vendor/
 composer.lock
+
 
 # ---- Cache et logs ----
 *.log

@@ -1,7 +1,7 @@
 driver=mysql
-username=root
+username=
 password=
-host=localhost
-database=giftbox_db
+host=
+database=
 charset=utf8
 collation=utf8_unicode_ci

@@ -1,0 +1,40 @@
+# ---- Fichiers et dossiers spécifiques au projet ----
+.env
+*.local.php
+*.lock
+*.ini
+avatar_*.*
+
+# ---- Dépendances ----
+vendor/
+composer.lock
+
+# ---- Cache et logs ----
+*.log
+*.cache
+cache/
+logs/
+tmp/
+temp/
+
+# ---- Fichiers de sessions et uploads temporaires ----
+sessions/
+uploads/tmp/
+
+# ---- IDE / éditeurs ----
+.vscode/
+.idea/
+nbproject/
+*.swp
+*.swo
+*.bak
+*.tmp
+
+# ---- Système ----
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ---- Tests ----
+coverage/
+.phpunit.result.cache

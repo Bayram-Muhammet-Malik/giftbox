@@ -11,7 +11,6 @@ class Categorie extends Eloq
     protected $primaryKey = 'id';
     public $timestamps = false;
 
-// libbélés et description en + dans la db
     protected $fillable = [
         'libelle',
         'description'

@@ -5,7 +5,7 @@ namespace gift\appli\models;
 
 use \Illuminate\Database\Eloquent as Eloq;
 
-class Categorie extends Eloq
+class Categorie extends Eloq\Model
 {
     protected $table = 'categorie';
     protected $primaryKey = 'id';

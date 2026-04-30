@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 namespace gift\appli\models;
-use \Illuminate\Database\Eloquent\Model as Eloq;
+use \Illuminate\Database\Eloquent as Eloq;
 
 class Box extends Eloq {
       protected $table = 'box';

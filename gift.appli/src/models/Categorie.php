@@ -1,8 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace gift/appli/models;
-use \Illuminate\Database\Eloquent\Model as Eloq;
+namespace gift\appli\models;
+
+use \Illuminate\Database\Eloquent as Eloq;
 
 class Categorie extends Eloq
 {
@@ -18,7 +19,7 @@ class Categorie extends Eloq
 
     public function prestations()
     {
-        return $this->hasMany(Prestation::class, 'cat_id');
+        return $this->hasMany('Prestation', 'cat_id');
     }
 
 }

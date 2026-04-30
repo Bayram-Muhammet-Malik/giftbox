@@ -18,4 +18,8 @@ class Prestation extends Eloq\Model {
     public function box(){
         return $this->belongsToMany('Box','box2presta', 'id', 'id');
     }
+
+    public function categorie(){
+        return $this->belongsTo('Categorie', 'id');
+    }
 }

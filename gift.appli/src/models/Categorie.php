@@ -16,9 +16,8 @@ class Categorie extends Eloq\Model
         'description'
     ];
 
-    public function prestations()
-    {
-        return $this->hasMany('Prestation', 'cat_id');
+    public function prestation() {
+        return $this->hasMany(Prestation::class, 'cat_id');
     }
 
 }

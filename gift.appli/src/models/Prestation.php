@@ -12,14 +12,14 @@ class Prestation extends Eloq\Model {
     public $incrementing = false;
     public $keyType = 'string';
 
-    public function coffret(){
-        return $this->belongsToMany('Coffret','coffret2presta', 'id', 'id');
+    public function coffret() {
+        return $this->belongsToMany(CoffretType::class, 'coffret2presta', 'presta_id', 'coffret_id');
     }
-    public function box(){
-        return $this->belongsToMany('Box','box2presta', 'id', 'id');
+    public function box() {
+        return $this->belongsToMany(Box::class, 'box2presta', 'presta_id', 'box_id');
     }
 
-    public function categorie(){
-        return $this->belongsTo('Categorie', 'id');
+    public function categorie() {
+        return $this->belongsTo(Categorie::class, 'cat_id');
     }
 }

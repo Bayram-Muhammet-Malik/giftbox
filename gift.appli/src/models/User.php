@@ -12,7 +12,7 @@ class User extends Eloq\Model {
 
     protected $fillable = ['id', 'user_id', 'password'];
 
-    public function box(){
-        return $this->hasMany('Box','id_user', 'id');
+    public function box() {
+        return $this->hasMany(Box::class, 'createur_id');
     }
 }

@@ -10,7 +10,7 @@ class Theme extends Eloq\Model {
     protected $primarykey = 'id';
     public $timestamps = false;
 
-    public function coffret(){
-        return $this->hasMany('Coffret', 'id');
+    public function coffret() {
+        return $this->hasMany(CoffretType::class, 'theme_id');
     }
 }

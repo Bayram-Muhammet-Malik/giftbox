@@ -12,5 +12,20 @@ return function (App $app): App {
                   return $rs;
             }
       );
+
+
+
+      $app->get('/prestation/', 
+            function(Request $rq, Response $rs,array $args):Response {
+                  $queryId = $rq->getQueryParams()[ 'id' ] ;
+                  
+
+                  
+                  $rs->getBody()->write("Hello, ". $args['name']);
+                  return $rs;
+            }
+      );
+
+
       return $app;
 };

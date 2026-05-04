@@ -50,13 +50,5 @@ return function (App $app): App {
             }
       );
 
-      // Prestation : prestation?id=xxxx
-      $app->get('/test',
-            function(Request $rq, Response $rs,array $args):Response {
-                  $rs->getBody()->write("Voici la prestation d'id : " . $args['id']);
-                  return $rs;
-            }
-      );
-
       return $app;
 };

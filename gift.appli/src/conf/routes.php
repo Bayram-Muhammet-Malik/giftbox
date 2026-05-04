@@ -21,7 +21,7 @@ return function (App $app): App {
                   return $rs;
             }
       );
-      
+
       // Catégories
       $app->get('categories',
             function(Request $rq, Response $rs,array $args):Response {
@@ -49,5 +49,14 @@ return function (App $app): App {
                   return $rs;
             }
       );
+
+      // Prestation : prestation?id=xxxx
+      $app->get('/test',
+            function(Request $rq, Response $rs,array $args):Response {
+                  $rs->getBody()->write("Voici la prestation d'id : " . $args['id']);
+                  return $rs;
+            }
+      );
+
       return $app;
 };

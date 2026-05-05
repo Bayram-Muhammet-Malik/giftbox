@@ -45,6 +45,12 @@ return function (App $app): App {
             $rs->getBody()->write("Categorie id : ". $args['id']);
 
             $categorie = Categories::all();
+            $html = "<ul>";
+            foreach ($categories as $categorie) {
+                  echo "{$categorie->id} - {$categorie->libelle} - {$categorie->description}\n";
+            }
+            $html .= "</ul>";
+            
             return $rs;
       }
       );

@@ -15,9 +15,9 @@ use \Psr\Http\Message\ResponseInterface as Response;
 use \Slim\App;
 
 use \gift\appli\models\Categorie;
+use \gift\appli\models\Prestation;
 
 return function (App $app): App {
-      // Catégories
       $app->get('/categories',
             function(Request $rq, Response $rs,array $args):Response {
                   $categories = Categorie::all();
@@ -26,18 +26,83 @@ return function (App $app): App {
                   <!DOCTYPE html>
                   <html lang="fr">
                   <head>
-                  \t<meta charset="UTF-8">
-                  \t<meta name="viewport" content="width=device-width, initial-scale=1.0">
-                  \t<title>Giftbox - Catégories</title>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>Giftbox - Catégories</title>
                   </head>
                   <body>
-                  \t<ul>\n
+                        <ul>
                   HTML;
 
                   foreach ($categories as $categorie) $html .= "\t\t<li>{$categorie->id} - {$categorie->libelle} - {$categorie->description}</li>\n";
                   
                   $html .= <<<HTML
-                  </ul>
+                        </ul>
+                  </body>
+                  </html>
+                  HTML;
+
+                  $rs->getBody()->write($html);
+                  return $rs;
+            }
+      );
+
+      $app -> get('/categorie/{id}',
+            function(Request $rq, Response $rs, array $args): Response {
+                  $categorie = Categorie::where('id', '=', $args['id'])->first();
+
+                  if ($categorie) {
+                        $content = "<p>{$categorie->id} - {$categorie->libelle} - {$categorie->description}</p>";
+                  } else {
+                        $content = "<p>Aucune catégorie trouvée pour l'id : {$args['id']}</p>";
+                  }
+
+                  $html = <<<HTML
+                  <!DOCTYPE html>
+                  <html lang="fr">
+                  <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>Giftbox - Catégorie ID</title>
+                  </head>
+                  <body>
+                        {$content}
+                  </body>
+                  </html>
+                  HTML;
+
+                  $rs->getBody()->write($html);
+                  return $rs;
+            }
+      );
+
+      // prestation?id=xxxx
+      $app->get('/prestation',
+            function(Request $rq, Response $rs): Response {
+                  $id = $rq->getQueryParams()['id'] ?? null;
+                  
+                  if ($id === null || $id === ''){
+                        $content = "<p>Aucun id donné</p>";
+                  } else {
+                        $prestation = Prestation::find($id);
+
+                        if ($prestation) {
+                              $content = "<p>{$prestation->id} - {$prestation->libelle} - {$prestation->description}</p>";
+                        } else {
+                              $content = "<p>Aucune prestation trouvée pour l'id : {$id}</p>";
+                        }
+                  }
+
+                  $html = <<<HTML
+                  <!DOCTYPE html>
+                  <html lang="fr">
+                  <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>Giftbox - Prestation ID</title>
+                  </head>
+                  <body>
+                        {$content}
                   </body>
                   </html>
                   HTML;
@@ -49,32 +114,3 @@ return function (App $app): App {
 
       return $app;
 };
-
-      /*
-      // Catégorie : categorie/{id}
-      $app -> get('/categorie/{id}',
-            function(Request $rq, Response $rs,array $args):Response {
-                  $rs->getBody()->write("Categorie id : ". $args['id']);
-
-                  $categorie = Categories::all();
-                  $html = $headerHMTL . "<ul>";
-                  foreach ($categories as $categorie) {
-                        echo "{$categorie->id} - {$categorie->libelle} - {$categorie->description}\n";
-                  }
-                  $html .= "</ul>" . $footerHTML;
-                  
-                  return $rs;
-            }
-      );
-
-      // Prestation : prestation?id=xxxx
-      $app->get('prestation/{id}',
-            function(Request $rq, Response $rs,array $args):Response {
-                  $rs->getBody()->write("Voici la prestation d'id : " . $args['id']);
-                  $categorie = Categorie::all();
-                  return $rs;
-            }
-      );
-
-      return $app;
-      */

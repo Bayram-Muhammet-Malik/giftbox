@@ -3,6 +3,7 @@
 *.local.php
 *.lock
 *.ini
+*.ini.dist
 avatar_*.*
 
 # ---- Dépendances ----

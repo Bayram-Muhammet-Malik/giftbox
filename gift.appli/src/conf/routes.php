@@ -59,7 +59,12 @@ return function (App $app): App {
       $app->get('prestation/{id}',
             function(Request $rq, Response $rs,array $args):Response {
                   $rs->getBody()->write("Voici la prestation d'id : " . $args['id']);
-                  $categorie = Categorie::all()
+                  $prestation = Prestation::where("id", "=", $args['id']);
+                  $html = 
+                        "<ul>{$prestation->id} - {$prestation->libelle} - {$prestation->description} - {$prestation->unite} - 
+                        {$prestation->tarif} - {$prestation->cat_id}\n</ul>";
+                  
+                  $rs->getBody()->write($html);
                   return $rs;
             }
       );

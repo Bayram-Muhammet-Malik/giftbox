@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+require_once __DIR__ . '/../vendor/autoload.php';
+
 // Connexion BD
 use Illuminate\Database\Capsule\Manager as DB;
 $db = new DB;
@@ -12,47 +14,57 @@ use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 use \Slim\App;
 
-require_once __DIR__ . '/../vendor/autoload.php';
+use \gift\appli\models\Categorie;
 
 return function (App $app): App {
-      $app->get('/hello/{name}',
-            function(Request $rq, Response $rs,array $args):Response {
-                  $rs->getBody()->write("Hello, ". $args['name']);
-                  return $rs;
-            }
-      );
-
       // Catégories
-      $app->get('categories',
+      $app->get('/categories',
             function(Request $rq, Response $rs,array $args):Response {
-                  $rs->getBody()->write("Voici la liste des catégories");
-                  // Prendre dans la bd la liste des catégories via requete sql
-                  $categorie = Categories::all();
-                  $html = "<ul>";
-                    foreach ($categories as $categorie) {
-                        echo "{$categorie->id} - {$categorie->libelle} - {$categorie->description}\n";
-                    }
-                    $html .= "</ul>";
+                  $categories = Categorie::all();
+                  
+                  $html = <<<HTML
+                  <!DOCTYPE html>
+                  <html lang="fr">
+                  <head>
+                  \t<meta charset="UTF-8">
+                  \t<meta name="viewport" content="width=device-width, initial-scale=1.0">
+                  \t<title>Giftbox - Catégories</title>
+                  </head>
+                  <body>
+                  \t<ul>\n
+                  HTML;
 
-                    $rs->getBody()->write($html);
+                  foreach ($categories as $categorie) $html .= "\t\t<li>{$categorie->id} - {$categorie->libelle} - {$categorie->description}</li>\n";
+                  
+                  $html .= <<<HTML
+                  </ul>
+                  </body>
+                  </html>
+                  HTML;
+
+                  $rs->getBody()->write($html);
                   return $rs;
             }
       );
 
+      return $app;
+};
+
+      /*
       // Catégorie : categorie/{id}
       $app -> get('/categorie/{id}',
-      function(Request $rq, Response $rs,array $args):Response {
-            $rs->getBody()->write("Categorie id : ". $args['id']);
+            function(Request $rq, Response $rs,array $args):Response {
+                  $rs->getBody()->write("Categorie id : ". $args['id']);
 
-            $categorie = Categories::all();
-            $html = "<ul>";
-            foreach ($categories as $categorie) {
-                  echo "{$categorie->id} - {$categorie->libelle} - {$categorie->description}\n";
+                  $categorie = Categories::all();
+                  $html = $headerHMTL . "<ul>";
+                  foreach ($categories as $categorie) {
+                        echo "{$categorie->id} - {$categorie->libelle} - {$categorie->description}\n";
+                  }
+                  $html .= "</ul>" . $footerHTML;
+                  
+                  return $rs;
             }
-            $html .= "</ul>";
-            
-            return $rs;
-      }
       );
 
       // Prestation : prestation?id=xxxx
@@ -70,4 +82,4 @@ return function (App $app): App {
       );
 
       return $app;
-};
+      */

@@ -23,7 +23,7 @@ return function (App $app): App {
       );
 
       // Catégories
-      $app->get('categories'),
+      $app->get('categories',
             function(Request $rq, Response $rs,array $args):Response {
                   $rs->getBody()->write("Voici la liste des catégories");
                   // Prendre dans la bd la liste des catégories via requete sql
@@ -39,13 +39,24 @@ return function (App $app): App {
             }
       );
 
+      // Catégorie : categorie/{id}
+      $app -> get('/categorie/{id}',
+      function(Request $rq, Response $rs,array $args):Response {
+            $rs->getBody()->write("Categorie id : ". $args['id']);
+
+            $categorie = Categories::all();
+            return $rs;
+      }
+      );
+
       // Prestation : prestation?id=xxxx
-      $app->get('prestation/{id}'),
+      $app->get('prestation/{id}',
             function(Request $rq, Response $rs,array $args):Response {
                   $rs->getBody()->write("Voici la prestation d'id : " . $args['id']);
                   $categorie = Categorie::all()
                   return $rs;
             }
       );
+
       return $app;
 };

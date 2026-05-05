@@ -28,7 +28,13 @@ return function (App $app): App {
                   $rs->getBody()->write("Voici la liste des catégories");
                   // Prendre dans la bd la liste des catégories via requete sql
                   $categorie = Categories::all();
+                  $html = "<ul>";
+                    foreach ($categories as $categorie) {
+                        echo "{$categorie->id} - {$categorie->libelle} - {$categorie->description}\n";
+                    }
+                    $html .= "</ul>";
 
+                    $rs->getBody()->write($html);
                   return $rs;
             }
       );
@@ -37,6 +43,7 @@ return function (App $app): App {
       $app->get('prestation/{id}'),
             function(Request $rq, Response $rs,array $args):Response {
                   $rs->getBody()->write("Voici la prestation d'id : " . $args['id']);
+                  $categorie = Categorie::all()
                   return $rs;
             }
       );

@@ -12,14 +12,14 @@ class GetPrestationIDAction extends AbstractAction {
        $id = $rq->getQueryParams()['id'] ?? null;
 
       if ($id === null || $id === ''){
-            $content = "<p>Aucun id donné</p>";
+            return $this->badRequest($rs, "ID de prestation invalide");
       } else {
             $prestation = Prestation::find($id);
 
             if ($prestation) {
                   $content = "<p>{$prestation->id} - {$prestation->libelle} - {$prestation->description}</p>";
-            } else {
-                  $content = "<p>Aucune prestation trouvée pour l'id : {$id}</p>";
+            } else if (!$prestation) {
+                  return $this->badRequest($rs, "Aucune prestation trouvée pour l'id : {$id}");
             }
       }
 
@@ -40,8 +40,4 @@ class GetPrestationIDAction extends AbstractAction {
       return $rs;
       }
 
-      protected function badRequest(Response $rs, string $message): Response {
-        $rs->getBody()->write(json_encode(['error' => $message]));
-        return $rs->withStatus(400)->withHeader('Content-Type', 'application/json');
-    }
 }

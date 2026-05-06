@@ -9,12 +9,17 @@ use gift\appli\models\Categorie;
 
 class GetCategorieIDAction extends AbstractAction {
     public function __invoke(Request $rq, Response $rs, array $args): Response {
+
+        if (!isset($args['id']) || !ctype_digit($args['id'])) {
+            return $this->badRequest($rs, "ID de catégorie invalide");
+        }
+
         $categorie = Categorie::where('id', '=', $args['id'])->first();
 
         if ($categorie) {
             $content = "<p>{$categorie->id} - {$categorie->libelle} - {$categorie->description}</p>";
-        } else {
-            $content = "<p>Aucune catégorie trouvée pour l'id : {$args['id']}</p>";
+        } else if(!$categorie) {
+           return $this->badRequest($rs, "Catégorie introuvable");
         }
 
         $html = <<<HTML

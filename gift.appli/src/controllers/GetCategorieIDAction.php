@@ -10,13 +10,17 @@ use gift\appli\models\Categorie;
 
 class GetCategorieIDAction extends AbstractAction {
     public function __invoke(Request $rq, Response $rs, array $args): Response {
+
+        if (!isset($args['id']) || !ctype_digit($args['id'])) {
+            return $this->badRequest($rs, "ID de catégorie invalide");
+        }
+
         $categorie = Categorie::where('id', '=', $args['id'])->first();
 
         if ($categorie) {
             $content = "<p>{$categorie->id} - {$categorie->libelle} - {$categorie->description}</p>";
         } else {
             throw new HttpNotFoundException($rq,"id non présente dans la base de donnée");
-            //$content = "<p>Aucune catégorie trouvée pour l'id : {$args['id']}</p>";
         }
 
         $html = <<<HTML
@@ -37,8 +41,4 @@ class GetCategorieIDAction extends AbstractAction {
         return $rs;
     }
 
-    protected function badRequest(Response $rs, string $message): Response {
-        $rs->getBody()->write(json_encode(['error' => $message]));
-        return $rs->withStatus(400)->withHeader('Content-Type', 'application/json');
-    }
 }

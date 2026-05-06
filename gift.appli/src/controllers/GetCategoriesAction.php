@@ -36,8 +36,4 @@ class GetCategoriesAction extends AbstractAction {
         return $rs;
     }
 
-    protected function badRequest(Response $rs, string $message): Response {
-        $rs->getBody()->write(json_encode(['error' => $message]));
-        return $rs->withStatus(400)->withHeader('Content-Type', 'application/json');
-    }
 }

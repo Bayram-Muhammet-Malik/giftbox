@@ -10,6 +10,11 @@ use gift\appli\models\Categorie;
 
 class GetPrestationsCategorieAction extends AbstractAction {
     public function __invoke(Request $rq, Response $rs, array $args): Response {
+        
+        if (!isset($args['id']) || !ctype_digit($args['id'])) {
+            return $this->badRequest($rs, "ID de catégorie invalide");
+        }
+
         $categorie = Categorie::where('id', '=', $args['id'])->first();
 
         if ($categorie) {
@@ -32,7 +37,7 @@ class GetPrestationsCategorieAction extends AbstractAction {
             }
 
         } else {
-            $content = "<p>Aucune catégorie trouvée pour l'id : {$args['id']}</p>";
+            return $this->badRequest($rs, "Catégorie introuvable");
         }
 
         $html = <<<HTML
@@ -51,10 +56,5 @@ class GetPrestationsCategorieAction extends AbstractAction {
 
         $rs->getBody()->write($html);
         return $rs;
-    }
-
-    protected function badRequest(Response $rs, string $message): Response {
-        $rs->getBody()->write(json_encode(['error' => $message]));
-        return $rs->withStatus(400)->withHeader('Content-Type', 'application/json');
     }
 }

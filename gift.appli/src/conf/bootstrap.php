@@ -12,4 +12,5 @@ $app->addRoutingMiddleware();
 $app->setBasePath('/giftbox/gift.appli/public');
 $app = (require_once __DIR__ . '/routes.php')($app);
 
+$app->addErrorMiddleware(true,false,false);
 return $app;

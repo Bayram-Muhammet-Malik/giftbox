@@ -4,6 +4,7 @@ namespace gift\appli\controllers;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Slim\Exception\HttpNotFoundException;
 
 use gift\appli\models\Categorie;
 
@@ -14,7 +15,8 @@ class GetCategorieIDAction extends AbstractAction {
         if ($categorie) {
             $content = "<p>{$categorie->id} - {$categorie->libelle} - {$categorie->description}</p>";
         } else {
-            $content = "<p>Aucune catégorie trouvée pour l'id : {$args['id']}</p>";
+            throw new HttpNotFoundException($rq,"id non présente dans la base de donnée");
+            //$content = "<p>Aucune catégorie trouvée pour l'id : {$args['id']}</p>";
         }
 
         $html = <<<HTML

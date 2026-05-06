@@ -4,6 +4,7 @@ namespace gift\appli\controllers;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Slim\Exception\HttpNotFoundException;
 
 use gift\appli\models\Prestation;
 
@@ -19,7 +20,8 @@ class GetPrestationIDAction extends AbstractAction {
             if ($prestation) {
                   $content = "<p>{$prestation->id} - {$prestation->libelle} - {$prestation->description}</p>";
             } else {
-                  $content = "<p>Aucune prestation trouvée pour l'id : {$id}</p>";
+                  throw new HttpNotFoundException($rq,"id non présente dans la base de donnée");
+                  //$content = "<p>Aucune prestation trouvée pour l'id : {$id}</p>";
             }
       }
 

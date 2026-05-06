@@ -7,7 +7,7 @@ use \Illuminate\Database\Eloquent as Eloq;
 
 class Prestation extends Eloq\Model {
     protected $table = 'prestation';
-    protected $primarykey = 'id';
+    protected $primaryKey = 'id';
     public $timestamps = false;
     public $incrementing = false;
     public $keyType = 'string';

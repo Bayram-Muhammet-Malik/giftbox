@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 namespace gift\appli\controllers;
 
 use Psr\Http\Message\ResponseInterface as Response;
@@ -7,12 +8,29 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 use gift\appli\models\Categorie;
 
-class GetCategorieIDAction extends AbstractAction {
+class GetPrestationsCategorieAction extends AbstractAction {
     public function __invoke(Request $rq, Response $rs, array $args): Response {
         $categorie = Categorie::where('id', '=', $args['id'])->first();
 
         if ($categorie) {
-            $content = "<p>{$categorie->id} - {$categorie->libelle} - {$categorie->description}</p>";
+            $content = "<h2>Prestations de la catégorie : {$categorie->libelle}</h2>";
+
+            if ($categorie->prestations !== null) {
+                if (count($categorie->prestations) > 0) {
+                    $content .= "<ul>";
+
+                    foreach ($categorie->prestations as $prestation) {
+                        $content .= "<li>{$prestation->id} - {$prestation->libelle} - {$prestation->description}</li>";
+                    }
+
+                    $content .= "</ul>";
+                } else {
+                    $content .= "<p>Aucune prestation dans cette catégorie</p>";
+                }
+            } else {
+                $content .= "<p>Relation prestations non trouvée</p>";
+            }
+
         } else {
             $content = "<p>Aucune catégorie trouvée pour l'id : {$args['id']}</p>";
         }
@@ -23,7 +41,7 @@ class GetCategorieIDAction extends AbstractAction {
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Giftbox - Catégorie ID</title>
+            <title>Giftbox - Prestations Catégorie</title>
         </head>
         <body>
             {$content}

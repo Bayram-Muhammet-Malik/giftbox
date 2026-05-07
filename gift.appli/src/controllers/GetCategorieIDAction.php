@@ -23,7 +23,7 @@ class GetCategorieIDAction extends AbstractAction {
 
         $view = Twig::fromRequest($rq);
 
-                return $view->render($rs, 'categorieView.twig', [
+                return $view->render($rs, 'categorieIDView.twig', [
                     'id' => $categorie->id,
                     'libelle' => $categorie->libelle,
                     'description' => $categorie->description

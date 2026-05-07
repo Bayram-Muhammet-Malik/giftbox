@@ -5,22 +5,20 @@ namespace gift\appli\controllers;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Exception\HttpNotFoundException;
+use Slim\Exception\HttpBadRequestException;
 
 use gift\appli\models\Categorie;
 
 class GetCategorieIDAction extends AbstractAction {
     public function __invoke(Request $rq, Response $rs, array $args): Response {
 
-        if (!isset($args['id']) || !ctype_digit($args['id'])) {
-            return $this->badRequest($rs, "ID de catégorie invalide");
-        }
+        if (!ctype_digit($args['id'])) throw new HttpBadRequestException($rq, "ID de catégorie incorecte");
 
-        $categorie = Categorie::where('id', '=', $args['id'])->first();
-
-        if ($categorie) {
+        try {
+            $categorie = Categorie::where('id', '=', $args['id'])->firstOrFail();
             $content = "<p>{$categorie->id} - {$categorie->libelle} - {$categorie->description}</p>";
-        } else {
-            throw new HttpNotFoundException($rq,"id non présente dans la base de donnée");
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            throw new HttpNotFoundException($rq, "ID correspondant non trouvé dans la base de donnée");
         }
 
         $html = <<<HTML

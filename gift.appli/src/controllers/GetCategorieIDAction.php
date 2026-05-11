@@ -6,6 +6,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Exception\HttpBadRequestException;
+
 use Slim\Views\Twig;
 
 use gift\appli\models\Categorie;
@@ -23,11 +24,10 @@ class GetCategorieIDAction extends AbstractAction {
 
         $view = Twig::fromRequest($rq);
 
-                return $view->render($rs, 'categorieIDView.twig', [
-                    'id' => $categorie->id,
-                    'libelle' => $categorie->libelle,
-                    'description' => $categorie->description
-                ]);
+            return $view->render($rs, 'categorieIDView.twig', [
+                'id' => $categorie->id,
+                'libelle' => $categorie->libelle,
+                'description' => $categorie->description
+            ]);
     }
-
 }

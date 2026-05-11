@@ -9,6 +9,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Exception\HttpBadRequestException;
 
+use Slim\Views\Twig;
 use gift\appli\models\Categorie;
 
 class GetPrestationsCategorieAction extends AbstractAction {
@@ -22,34 +23,10 @@ class GetPrestationsCategorieAction extends AbstractAction {
             throw new HttpNotFoundException($rq, "ID correspondant non trouvé dans la base de donnée");
         }
 
-        $prestations = $categorie->prestations;
-        $content = "<h3>Prestations de la catégorie : {$categorie->libelle}</h3>";
+        $view = Twig::fromRequest($rq);
 
-        if ($prestations->isEmpty()) {
-            $content .= "<p>Aucune prestation dans cette catégorie</p>";
-        } else {
-            $content .= "<ul>";
-            foreach ($prestations as $prestation) {
-                $content .= "<li>{$prestation->id} - {$prestation->libelle} - {$prestation->description}</li>";
-            }
-            $content .= "</ul>";
-        }
-
-        $html = <<<HTML
-        <!DOCTYPE html>
-        <html lang="fr">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Giftbox - Prestations Catégorie</title>
-        </head>
-        <body>
-            {$content}
-        </body>
-        </html>
-        HTML;
-
-        $rs->getBody()->write($html);
-        return $rs;
+        return $view->render($rs, 'prestationView.twig', [
+            'prestations' => $prestations = $categorie->prestations
+        ]);
     }
 }

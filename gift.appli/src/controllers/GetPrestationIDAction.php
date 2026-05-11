@@ -7,6 +7,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Exception\HttpBadRequestException;
 
+use Slim\Views\Twig;
 use gift\appli\models\Prestation;
 
 class GetPrestationIDAction extends AbstractAction {
@@ -21,22 +22,12 @@ class GetPrestationIDAction extends AbstractAction {
             throw new HttpNotFoundException($rq,"ID correspondant non trouvé dans la base de donnée");
       }
 
-      $html = <<<HTML
-      <!DOCTYPE html>
-      <html lang="fr">
-      <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Giftbox - Prestation ID</title>
-      </head>
-      <body>
-            {$content}
-      </body>
-      </html>
-      HTML;
+      $view = Twig::fromRequest($rq);
 
-      $rs->getBody()->write($html);
-
-      return $rs;
+      return $view->render($rs, 'prestationIDView.twig', [
+          'id' => $prestation->id,
+          'libelle' => $prestation->libelle,
+          'description' => $prestation->description
+      ]);
     }
 }

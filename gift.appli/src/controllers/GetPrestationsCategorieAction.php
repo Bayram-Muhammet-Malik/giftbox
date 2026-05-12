@@ -14,7 +14,7 @@ use gift\appli\models\Categorie;
 
 class GetPrestationsCategorieAction extends AbstractAction {
     public function __invoke(Request $rq, Response $rs, array $args): Response {
-        
+
         if (!ctype_digit($args['id'])) throw new HttpBadRequestException($rq, "ID de catégorie incorecte");
 
         try {
@@ -26,7 +26,8 @@ class GetPrestationsCategorieAction extends AbstractAction {
         $view = Twig::fromRequest($rq);
 
         return $view->render($rs, 'prestationView.twig', [
-            'prestations' => $prestations = $categorie->prestations
+            'prestations' => $prestations = $categorie->prestations,
+            'categorie_id' => $categorie->id
         ]);
     }
 }

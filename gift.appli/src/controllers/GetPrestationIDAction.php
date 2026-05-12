@@ -12,9 +12,9 @@ use gift\appli\models\Prestation;
 
 class GetPrestationIDAction extends AbstractAction {
     public function __invoke(Request $rq, Response $rs, array $args): Response {
-      $id = $rq->getQueryParams()['id'] ?? null;
+        $id = $args['id'] ?? null;
       if ($id === null) throw new HttpBadRequestException($rq, "ID de prestation manquant");
-      
+
       try {
             $prestation = Prestation::findOrFail($id);
             $content = "<p>{$prestation->id} - {$prestation->libelle} - {$prestation->description}</p>";
@@ -27,7 +27,8 @@ class GetPrestationIDAction extends AbstractAction {
       return $view->render($rs, 'prestationIDView.twig', [
           'id' => $prestation->id,
           'libelle' => $prestation->libelle,
-          'description' => $prestation->description
+          'description' => $prestation->description,
+          'categorie_id' => $prestation->categorie_id
       ]);
     }
 }

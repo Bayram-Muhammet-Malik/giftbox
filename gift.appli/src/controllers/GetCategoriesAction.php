@@ -16,7 +16,8 @@ class GetCategoriesAction extends AbstractAction {
         $view = Twig::fromRequest($rq);
 
         return $view->render($rs, 'categorieView.twig', [
-            'categories' => $categories
-        ]);
+            'categories' => $categories,
+
+            ]);
     }
 }

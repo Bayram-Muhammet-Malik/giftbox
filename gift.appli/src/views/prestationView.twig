@@ -6,12 +6,12 @@
     <title>Giftbox - Prestations</title>
 </head>
 <body>
-    <h1>Liste des prestations pour la catégorie : {{ categorie.id }}</h1>
+    <h1>Liste des prestations pour la catégorie : {{ categorie_id }}</h1>
 
     <ul>
         {% for prestation in prestations %}
             <li>
-                    {{ prestation.id }} - {{ prestation.libelle }} - {{ prestation.description }}
+                {{ loop.index }} - {{ prestation.libelle }} - {{ prestation.description }} - (id: {{ prestation.id }})
             </li>
         {% endfor %}
     </ul>

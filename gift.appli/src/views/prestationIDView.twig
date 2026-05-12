@@ -6,6 +6,10 @@
     <title>Giftbox - Prestation ID</title>
 </head>
 <body>
-    <p> {{ id }} - {{ libelle }} - {{ description }} </p>
+    <h1>Prestation</h1>
+    <p>{{ id }} - {{ libelle }} - {{ description }}</p>
+    <p>
+        <a href="{{ url_for('categorie_prestations', {'id': categorie.id}) }}">Retour à la liste des prestations</a>
+    </p>
 </body>
 </html>

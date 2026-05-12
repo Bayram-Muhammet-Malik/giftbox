@@ -16,7 +16,8 @@ $app->setBasePath('/giftbox/gift.appli/public');
 
 // Twig
 $twig = Twig::create(__DIR__ . '/../views', [
-    'cache' => false
+    'cache' => __DIR__ . '/../app/views/cache',
+    'auto_reload' => true,
 ]);
 $app->add(TwigMiddleware::create($app, $twig));
 

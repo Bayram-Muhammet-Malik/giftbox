@@ -6,12 +6,11 @@
     <title>Giftbox - Catégories</title>
 </head>
 <body>
+    <h1>Liste des catégories</h1>
     <ul>
         {% for categorie in categories %}
             <li>
-                {{ categorie.id }} -
-                {{ categorie.libelle }} -
-                {{ categorie.description }}
+                <a href="{{ url_for('categorie', {'id': categorie.id}) }}">{{ categorie.id }} - {{ categorie.libelle }} - {{ categorie.description }}</a>
             </li>
         {% endfor %}
     </ul>

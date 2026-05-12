@@ -6,14 +6,22 @@
     <title>Giftbox - Prestations</title>
 </head>
 <body>
+    <h1>Liste des prestations pour la catégorie : {{ categorie.id }}</h1>
+
     <ul>
         {% for prestation in prestations %}
             <li>
-                {{ prestation.id }} -
-                {{ prestation.libelle }} -
-                {{ prestation.description }}
+                    {{ prestation.id }} - {{ prestation.libelle }} - {{ prestation.description }}
             </li>
         {% endfor %}
     </ul>
+
+    <p>
+        <a href="{{ url_for('categorie', {'id': id}) }}">
+            Retour à la catégorie
+        </a>
+
+
+    </p>
 </body>
 </html>

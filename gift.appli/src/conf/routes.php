@@ -17,10 +17,10 @@ use \gift\appli\controllers\GetPrestationIDAction;
 use \gift\appli\controllers\GetPrestationsCategorieAction;
 
 return function (App $app): App {
-    $app->get('/categories', GetCategoriesAction::class)->setName('categories');
-    $app->get('/categorie/{id}', GetCategorieIDAction::class)->setName('categorie');
-    $app->get('/prestation/{id}', GetPrestationIDAction::class)->setName('prestation');
-    $app->get('/categorie/{id}/prestations', GetPrestationsCategorieAction::class)->setName('categorie_prestations');
+      $app->get('/categories', GetCategoriesAction::class)->setName('categories');
+      $app->get('/categorie/{id}', GetCategorieIDAction::class)->setName('categorieID');
+      $app->get('/prestation',GetPrestationIDAction::class)->setName('prestation');
+      $app->get('/categorie/{id}/prestations', GetPrestationsCategorieAction::class)->setName('categ2prestas');
+      return $app;
 
-    return $app;
 };

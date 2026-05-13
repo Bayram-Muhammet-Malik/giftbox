@@ -11,7 +11,9 @@
     <ul>
         {% for prestation in prestations %}
             <li>
-                {{ loop.index }} - {{ prestation.libelle }} - {{ prestation.description }} - (id: {{ prestation.id }})
+                <a href="{{ url_for('prestation', {'id': prestation.id}) }}">
+                    {{ loop.index }} - {{ prestation.libelle }} - {{ prestation.description }} {{ prestation.id }})
+                </a>
             </li>
         {% endfor %}
     </ul>

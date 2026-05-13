@@ -7,9 +7,9 @@
 </head>
 <body>
     <h1>Prestation</h1>
-    <p>{{ id }} - {{ libelle }} - {{ description }}</p>
+    <p>Catégorie: {{ categorie_id }} | {{ id }} - {{ libelle }} - {{ description }}</p>
     <p>
-        <a href="{{ url_for('categorie_prestations', {'id': categorie_id}) }}">Retour à la liste des prestations</a>
+        <a href="{{ url_for('categorie_prestations', {'id': categorie_id}) }}">Retour à la liste des prestations pour cette catégorie</a>
     </p>
 </body>
 </html>

@@ -17,7 +17,7 @@ class GetPrestationIDAction extends AbstractAction {
 
       try {
             $prestation = Prestation::findOrFail($id);
-            $content = "<p>{$prestation->id} - {$prestation->libelle} - {$prestation->description}</p>";
+            $content = "<p>{$prestation->id} - {$prestation->libelle} - {$prestation->description} - Catégorie:  {$prestation->cat_id}</p>";
       } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
             throw new HttpNotFoundException($rq,"ID correspondant non trouvé dans la base de donnée");
       }
@@ -28,7 +28,7 @@ class GetPrestationIDAction extends AbstractAction {
           'id' => $prestation->id,
           'libelle' => $prestation->libelle,
           'description' => $prestation->description,
-          'categorie_id' => $prestation->categorie_id
+          'categorie_id' => $prestation->cat_id
       ]);
     }
 }

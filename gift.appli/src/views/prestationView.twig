@@ -1,18 +1,15 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Giftbox - Prestations</title>
-</head>
-<body>
+{% extends 'layout.twig' %}
+
+{% block title %}Giftbox - Prestations{% endblock %}
+
+{% block content %}
     <h1>Liste des prestations pour la catégorie : {{ categorie_id }}</h1>
 
     <ul>
         {% for prestation in prestations %}
             <li>
                 <a href="{{ url_for('prestation', {'id': prestation.id}) }}">
-                    {{ loop.index }} - {{ prestation.libelle }} - {{ prestation.description }} {{ prestation.id }})
+                    {{ loop.index }} - {{ prestation.libelle }} - {{ prestation.description }} {{ prestation.id }}
                 </a>
             </li>
         {% endfor %}
@@ -22,8 +19,5 @@
         <a href="{{ url_for('categorieID', {'id': categorie_id}) }}">
             Retour à la catégorie
         </a>
-
-
     </p>
-</body>
-</html>
+{% endblock %}

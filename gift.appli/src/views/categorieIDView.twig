@@ -1,15 +1,16 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Giftbox - Catégorie ID</title>
-</head>
-<body>
-    <p> {{ id }} - {{ libelle }} - {{ description }} </p>
+{% extends 'layout.twig' %}
+
+{% block title %}Giftbox - Catégorie{% endblock %}
+
+{% block content %}
+    <h1>Détail de la catégorie</h1>
+
+    <p>{{ id }} - {{ libelle }} - {{ description }}</p>
 
     <p>
-        <a href="{{ url_for('categorie_prestations', {'id': id}) }}">Voir les prestations de cette catégorie</a>
+        <a href="{{ url_for('categorie_prestations', {'id': id}) }}">
+            Voir les prestations de cette catégorie
+        </a>
     </p>
 
     <p>
@@ -17,5 +18,4 @@
             Retour à la liste des catégories
         </a>
     </p>
-</body>
-</html>
+{% endblock %}

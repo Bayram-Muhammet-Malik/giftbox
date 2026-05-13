@@ -7,10 +7,10 @@ use \Illuminate\Database\Eloquent as Eloq;
 
 class CoffretType extends Eloq\Model {
     protected $table = 'coffret_type';
-    protected $primarykey = 'id';
+    protected $primaryKey = 'id';
     public $timestamps = false;
 
-    public function prestation() {
+    public function prestations() {
         return $this->belongsToMany(Prestation::class, 'coffret2presta', 'coffret_id', 'presta_id');
     }
 

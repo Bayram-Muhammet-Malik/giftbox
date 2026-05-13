@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giftbox - Coffrets types</title>
+</head>
+<body>
+    <h1>Liste des coffrets types classés par thème</h1>
+
+    {% for theme_id, coffrets in coffretTypes %}
+        <h2>Thème {{ theme_id }}</h2>
+
+        <ul>
+            {% for coffret in coffrets %}
+                <li>
+                    <a href="{{ url_for('coffretTypeDetail', {'id': coffret.id}) }}">
+                        {{ coffret.libelle }}
+                    </a>
+                    - {{ coffret.description }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endfor %}
+</body>
+</html>

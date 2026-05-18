@@ -25,7 +25,7 @@ class GetPrestationsCategorieAction extends AbstractAction {
 
         $view = Twig::fromRequest($rq);
 
-        return $view->render($rs, 'prestationView.twig', [
+        return $view->render($rs, 'categoriePrestationsView.twig', [
             'prestations' => $prestations = $categorie->prestations,
             'categorie_id' => $categorie->id
         ]);

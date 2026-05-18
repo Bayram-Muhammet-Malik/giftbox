@@ -8,13 +8,13 @@
 <body>
     <h1>Liste des coffrets types classés par thème</h1>
 
-    {% for theme_id, coffrets in coffretTypes %}
+    {% for theme_id, coffrets in coffret_types %}
         <h2>Thème {{ theme_id }}</h2>
 
         <ul>
             {% for coffret in coffrets %}
                 <li>
-                    <a href="{{ url_for('coffretTypeDetail', {'id': coffret.id}) }}">
+                    <a href="{{ url_for('coffret_type_detail', {'id': coffret.id}) }}">
                         {{ coffret.libelle }}
                     </a>
                     - {{ coffret.description }}

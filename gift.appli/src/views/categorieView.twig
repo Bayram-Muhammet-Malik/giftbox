@@ -7,7 +7,7 @@
     <ul>
         {% for categorie in categories %}
             <li>
-                <a href="{{ url_for('categorieID', {'id': categorie.id}) }}">
+                <a href="{{ url_for('categorie_id', {'id': categorie.id}) }}">
                     {{ categorie.libelle }}
                 </a>
             </li>

@@ -22,7 +22,7 @@ class GetCoffretTypeIDAction extends AbstractAction {
         $view = Twig::fromRequest($rq);
 
         return $view->render($rs, 'coffretTypeIDView.twig', [
-            'coffretType' => $coffretType,
+            'coffret_type' => $coffretType,
             'prestations' => $coffretType->prestations
         ]);
     }

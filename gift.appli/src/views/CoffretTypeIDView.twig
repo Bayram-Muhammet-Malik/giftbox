@@ -6,10 +6,10 @@
     <title>Giftbox - Détail coffret type</title>
 </head>
 <body>
-    <h1>{{ coffretType.libelle }}</h1>
+    <h1>{{ coffret_type.libelle }}</h1>
 
-    <p>{{ coffretType.description }}</p>
-    <p>Thème : {{ coffretType.theme_id }}</p>
+    <p>{{ coffret_type.description }}</p>
+    <p>Thème : {{ coffret_type.theme_id }}</p>
 
     <h2>Liste des prestations</h2>
     <ul>
@@ -23,7 +23,7 @@
     </ul>
 
     <p>
-        <a href="{{ url_for('coffretType') }}">
+        <a href="{{ url_for('coffret_types') }}">
             Retour à la liste des coffrets types
         </a>
     </p>

@@ -9,13 +9,13 @@ use gift\appli\models\CoffretType;
 use Slim\Views\Twig;
 
 class GetCoffretTypeAction extends AbstractAction {
-public function __invoke(Request $rq, Response $rs, array $args): Response {
-    $coffretTypes = CoffretType::orderBy('theme_id')->get()->groupBy('theme_id');
+    public function __invoke(Request $rq, Response $rs, array $args): Response {
+        $coffretTypes = CoffretType::orderBy('theme_id')->get()->groupBy('theme_id');
 
-    $view = Twig::fromRequest($rq);
+        $view = Twig::fromRequest($rq);
 
-    return $view->render($rs, 'coffretTypeView.twig', [
-        'coffretTypes' => $coffretTypes,
-    ]);
-}
+        return $view->render($rs, 'coffretTypeView.twig', [
+            'coffret_types' => $coffretTypes,
+        ]);
+    }
 }

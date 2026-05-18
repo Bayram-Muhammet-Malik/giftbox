@@ -21,13 +21,13 @@ use \gift\appli\controllers\GetCoffretTypeIDAction;
 
 return function (App $app): App {
     $app->get('/categories', GetCategoriesAction::class)->setName('categories');
-    $app->get('/categorie/{id}', GetCategorieIDAction::class)->setName('categorieID');
+    $app->get('/categorie/{id}', GetCategorieIDAction::class)->setName('categorie_id');
     $app->get('/prestation/{id}', GetPrestationIDAction::class)->setName('prestation');
     $app->get('/categorie/{id}/prestations', GetPrestationsCategorieAction::class)->setName('categorie_prestations');
 
-    $app->get('/home', GetHomeAction::class)->setName('home');
-    $app->get('/coffretType', GetCoffretTypeAction::class)->setName('coffretType');
-    $app->get('/coffretType/{id}', GetCoffretTypeIDAction::class)->setName('coffretTypeDetail');
+    $app->get('/', GetHomeAction::class)->setName('home');
+    $app->get('/coffret_types', GetCoffretTypeAction::class)->setName('coffret_types');
+    $app->get('/coffret_type/{id}', GetCoffretTypeIDAction::class)->setName('coffret_type_detail');
 
     return $app;
 };

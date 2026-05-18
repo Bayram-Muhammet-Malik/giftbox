@@ -1,0 +1,19 @@
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+}
+
+header, footer {
+    background-color: aliceblue;
+    text-align: center;
+    padding: 5px;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+main{
+    padding: 5px;
+}

@@ -7,22 +7,16 @@
     <link rel="stylesheet" href="{{ css_path }}/style.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            {% include 'header.twig' %}
-        </header>
+    <header>
+        {% include 'header.twig' %}
+    </header>
 
-        <nav>
-            {% include 'nav.twig' %}
-        </nav>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
 
-        <main>
-            {% block content %}{% endblock %}
-        </main>
-
-        <footer>
-            {% include 'footer.twig' %}
-        </footer>
-    </div>
+    <footer>
+        {% include 'footer.twig' %}
+    </footer>
 </body>
 </html>

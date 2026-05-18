@@ -1,13 +1,9 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Giftbox - Détail coffret type</title>
-</head>
-<body>
-    <h1>{{ coffret_type.libelle }}</h1>
+{% extends 'layout.twig' %}
 
+{% block title %}Giftbox - Détail coffret type{% endblock %}
+
+{% block content %}
+    <h1>{{ coffretType.libelle }}</h1>
     <p>{{ coffret_type.description }}</p>
     <p>Thème : {{ coffret_type.theme_id }}</p>
 
@@ -27,5 +23,4 @@
             Retour à la liste des coffrets types
         </a>
     </p>
-</body>
-</html>
+{% endblock %}

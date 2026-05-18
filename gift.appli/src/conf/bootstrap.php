@@ -19,8 +19,8 @@ $twig = Twig::create(__DIR__ . '/../views', [
     'cache' => __DIR__ . '/../app/views/cache',
     'auto_reload' => true,
 ]);
-$twig->getEnvironment()->addGlobal('css_path', 'css');
-$twig->getEnvironment()->addGlobal('img_path', 'images/img');
+$twig->getEnvironment()->addGlobal('css_path', $app->getBasePath() . '/css');
+$twig->getEnvironment()->addGlobal('img_path', $app->getBasePath() . '/images/img');
 $twig->getEnvironment()->addGlobal('menu', [
     ['label' => 'Liste des catégories', 'route' => 'categories']
 ]);

@@ -9,7 +9,7 @@ services:
       context: build
       dockerfile: 8.4-cli.Dockerfile
     ports:
-      - "****:80"
+      - "80:80"
     volumes :
       - ./gift.appli/:/var/php
       - ./images/img:/var/php/public/img
@@ -25,20 +25,20 @@ services:
 # mysql + adminer / can be replaced by mariadb
 #############################
   sql:
-    image: mariadb:latest
+    image: mariadb:10.6.25
     env_file:
       - .database_env
     ports:
-      - "****:3306"
+      - "3306:3306"
     networks:
       gift.net:
         aliases:
           - sql.db
 
   adminer:
-    image: adminer
+    image: adminer:5.4.2
     ports:
-      - "****:8080"
+      - "8080:8080"
     networks:
       - gift.net
 

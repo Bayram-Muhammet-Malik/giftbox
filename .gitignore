@@ -1,10 +1,9 @@
 # ---- Fichiers et dossiers spécifiques au projet ----
 .env
+.database_env
 *.local.php
 *.lock
 *.ini
-*.ini.dist
-avatar_*.*
 
 # ---- Dépendances ----
 vendor/

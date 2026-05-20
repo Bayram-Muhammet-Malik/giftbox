@@ -17,6 +17,7 @@ cache/
 logs/
 tmp/
 temp/
+data/
 
 # ---- Fichiers de sessions et uploads temporaires ----
 sessions/

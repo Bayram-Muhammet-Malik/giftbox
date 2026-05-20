@@ -11,13 +11,13 @@ use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 use \Slim\App;
 
-use \gift\appli\controllers\GetCategoriesAction;
-use \gift\appli\controllers\GetCategorieIDAction;
-use \gift\appli\controllers\GetPrestationIDAction;
-use \gift\appli\controllers\GetPrestationsCategorieAction;
-use \gift\appli\controllers\GetHomeAction;
-use \gift\appli\controllers\GetCoffretTypeAction;
-use \gift\appli\controllers\GetCoffretTypeIDAction;
+use \gift\appli\webui\actions\GetCategoriesAction;
+use \gift\appli\webui\actions\GetCategorieIDAction;
+use \gift\appli\webui\actions\GetPrestationIDAction;
+use \gift\appli\webui\actions\GetPrestationsCategorieAction;
+use \gift\appli\webui\actions\GetHomeAction;
+use \gift\appli\webui\actions\GetCoffretTypeAction;
+use \gift\appli\webui\actions\GetCoffretTypeIDAction;
 
 return function (App $app): App {
     $app->get('/categories', GetCategoriesAction::class)->setName('categories');

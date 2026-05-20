@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
-namespace gift\appli\controllers;
+namespace gift\appli\webui\actions;
 
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-use gift\appli\models\Categorie;
+use gift\appli\infrastructure\Categorie;
 use Slim\Views\Twig;
 
 class GetCategoriesAction extends AbstractAction {

@@ -1,29 +1,33 @@
 <?php
 declare(strict_types=1);
-namespace gift\appli\controllers;
+
+namespace gift\appli\webui\actions;
+
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+
 use Slim\Exception\HttpNotFoundException;
 use Slim\Exception\HttpBadRequestException;
-use Slim\Views\Twig;
-use gift\appli\models\CoffretType;
 
-class GetCoffretTypeIDAction extends AbstractAction {
+use Slim\Views\Twig;
+use gift\appli\infrastructure\Categorie;
+
+class GetPrestationsCategorieAction extends AbstractAction {
     public function __invoke(Request $rq, Response $rs, array $args): Response {
-        if (!isset($args['id']) || !ctype_digit((string)$args['id'])) {
-            throw new HttpBadRequestException($rq, "ID de coffret type incorrect");
-        }
+
+        if (!ctype_digit($args['id'])) throw new HttpBadRequestException($rq, "ID de catégorie incorecte");
+
         try {
-            $coffretType = CoffretType::where('id', '=', $args['id'])->firstOrFail();
+            $categorie = Categorie::where('id', '=', $args['id'])->firstOrFail();
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
             throw new HttpNotFoundException($rq, "ID correspondant non trouvé dans la base de donnée");
         }
 
         $view = Twig::fromRequest($rq);
 
-        return $view->render($rs, 'coffretTypeIDView.twig', [
-            'coffret_type' => $coffretType,
-            'prestations' => $coffretType->prestations
+        return $view->render($rs, 'categoriePrestationsView.twig', [
+            'prestations' => $prestations = $categorie->prestations,
+            'categorie_id' => $categorie->id
         ]);
     }
 }

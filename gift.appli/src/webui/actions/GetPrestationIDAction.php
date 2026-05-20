@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-namespace gift\appli\controllers;
+namespace gift\appli\webui\actions;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -8,7 +8,7 @@ use Slim\Exception\HttpNotFoundException;
 use Slim\Exception\HttpBadRequestException;
 
 use Slim\Views\Twig;
-use gift\appli\models\Prestation;
+use gift\appli\infrastructure\Prestation;
 
 class GetPrestationIDAction extends AbstractAction {
     public function __invoke(Request $rq, Response $rs, array $args): Response {

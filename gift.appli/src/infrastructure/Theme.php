@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace gift\appli\models;
+namespace gift\appli\infrastructure;
 
 use \Illuminate\Database\Eloquent as Eloq;
 

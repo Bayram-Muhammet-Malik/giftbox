@@ -15,7 +15,7 @@ $app->addErrorMiddleware(true,false,false);
 $app->setBasePath('');
 
 // Twig
-$twig = Twig::create(__DIR__ . '/../views', [
+$twig = Twig::create(__DIR__ . '/../webui/views', [
     'cache' => __DIR__ . '/../app/views/cache',
     'auto_reload' => true,
 ]);

@@ -9,7 +9,7 @@ services:
       context: build
       dockerfile: 8.4-cli.Dockerfile
     ports:
-      - "****:80"
+      - "80:80"
     volumes :
       - ./gift.appli/:/var/php
       - ./images/img:/var/php/public/img
@@ -29,7 +29,7 @@ services:
     env_file:
       - .database_env
     ports:
-      - "****:3306"
+      - "80:3306"
     networks:
       gift.net:
         aliases:
@@ -38,7 +38,7 @@ services:
   adminer:
     image: adminer
     ports:
-      - "****:8080"
+      - "8080:8080"
     networks:
       - gift.net
 

@@ -12,7 +12,7 @@ Eloquent::init(__DIR__ . '/gift.db.conf.ini');
 $app = \Slim\Factory\AppFactory::create();
 $app->addRoutingMiddleware();
 $app->addErrorMiddleware(true,false,false);
-$app->setBasePath('/giftbox/gift.appli/public');
+$app->setBasePath('');
 
 // Twig
 $twig = Twig::create(__DIR__ . '/../views', [
@@ -24,7 +24,7 @@ $twig->getEnvironment()->addGlobal('img_path', $app->getBasePath() . '/images/im
 $twig->getEnvironment()->addGlobal('menu', [
     ['label' => 'Liste des catégories', 'route' => 'categories']
 ]);
-$app->add(TwigMiddleware::create($app, $twig)); 
+$app->add(TwigMiddleware::create($app, $twig));
 
 $app = (require_once __DIR__ . '/routes.php')($app);
 return $app;

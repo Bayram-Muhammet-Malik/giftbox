@@ -4,6 +4,7 @@
 *.local.php
 *.lock
 *.ini
+!build/php.ini
 
 # ---- Dépendances ----
 vendor/

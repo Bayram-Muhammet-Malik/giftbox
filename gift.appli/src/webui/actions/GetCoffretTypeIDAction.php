@@ -1,13 +1,14 @@
 <?php
 declare(strict_types=1);
-namespace gift\appli\webui\actions;
+namespace gift\webui\actions;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Views\Twig;
-use gift\appli\infrastructure\CoffretType;
+
+use gift\core\domain\entities\CoffretType;
 
 class GetCoffretTypeIDAction extends AbstractAction {
     public function __invoke(Request $rq, Response $rs, array $args): Response {

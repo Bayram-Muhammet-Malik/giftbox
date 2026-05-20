@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 session_start();
 
-use \gift\appli\utils\Eloquent;
+use \gift\infra\Eloquent;
 use \Slim\Views\Twig;
 use \Slim\Views\TwigMiddleware;
 

@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
-namespace gift\appli\webui\actions;
+namespace gift\webui\actions;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-use gift\appli\infrastructure\CoffretType;
+use gift\core\domain\entities\CoffretType;
 use Slim\Views\Twig;
 
 class GetCoffretTypeAction extends AbstractAction {

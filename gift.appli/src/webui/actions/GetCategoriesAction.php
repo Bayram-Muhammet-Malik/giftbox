@@ -1,17 +1,18 @@
 <?php
 declare(strict_types=1);
-namespace gift\appli\webui\actions;
+namespace gift\webui\actions;
 
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-
-use gift\appli\infrastructure\Categorie;
 use Slim\Views\Twig;
+
+use gift\core\application\usecases\CatalogueService;
 
 class GetCategoriesAction extends AbstractAction {
     public function __invoke(Request $rq, Response $rs, array $args): Response {
-        $categories = Categorie::all();
+        $service = new CatalogueService();
+        $categories = $service->getCategories();
 
         $view = Twig::fromRequest($rq);
 

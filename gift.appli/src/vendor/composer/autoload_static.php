@@ -39,6 +39,9 @@ class ComposerStaticInit4343948420c200504963dbcc2dc09f64
         ),
         'g' =>
         array (
+            'gift\\webui\\' => 11,
+            'gift\\infra\\' => 11,
+            'gift\\core\\' => 10,
             'gift\\appli\\' => 11,
         ),
         'T' =>
@@ -112,6 +115,18 @@ class ComposerStaticInit4343948420c200504963dbcc2dc09f64
         'voku\\' =>
         array (
             0 => __DIR__ . '/..' . '/voku/portable-ascii/src/voku',
+        ),
+        'gift\\webui\\' =>
+        array (
+            0 => __DIR__ . '/../..' . '/webui',
+        ),
+        'gift\\infra\\' =>
+        array (
+            0 => __DIR__ . '/../..' . '/infrastructure',
+        ),
+        'gift\\core\\' =>
+        array (
+            0 => __DIR__ . '/../..' . '/application_core',
         ),
         'gift\\appli\\' =>
         array (

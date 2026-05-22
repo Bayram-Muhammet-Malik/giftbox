@@ -8,7 +8,11 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Views\Twig;
+
 use gift\core\application\usecases\CatalogueService;
+use gift\core\application\exceptions\DataErrorException;
+use gift\core\application\exceptions\NotFoundException;
+
 class GetCategorieIDAction extends AbstractAction {
 
     public function __invoke(Request $rq, Response $rs, array $args): Response {

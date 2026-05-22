@@ -13,18 +13,14 @@ use gift\core\application\usecases\CatalogueService;
 class GetPrestationIDAction extends AbstractAction {
 
     public function __invoke(Request $rq, Response $rs, array $args): Response {
-
-        $id = $args['id'] ?? null;
-
-        if ($id === null) {
-            throw new HttpBadRequestException($rq, "ID de prestation manquant");
-        }
-
         $service = new CatalogueService();    
-        $prestation = $service->getPrestationById((string) $id);
-
-        if (empty($prestation)) {
-            throw new HttpNotFoundException($rq, "ID correspondant non trouvé dans la base de donnée");
+        
+        try {
+            $prestation = $service->getPrestationById($args['id']);
+        } catch (DataErrorException $e) {
+            throw new HttpBadRequestException($rq, $e->getMessage());
+        } catch (NotFoundException $e) {
+            throw new HttpNotFoundException($rq, $e->getMessage());
         }
 
         $view = Twig::fromRequest($rq);

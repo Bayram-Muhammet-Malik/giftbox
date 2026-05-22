@@ -13,15 +13,14 @@ use gift\core\application\usecases\CatalogueService;
 class GetCoffretTypeIDAction extends AbstractAction {
 
     public function __invoke(Request $rq, Response $rs, array $args): Response {
-
-        if (!isset($args['id']) || !ctype_digit((string) $args['id'])) {
-            throw new HttpBadRequestException($rq, "ID de coffret type incorrect");
-        }
         $service = new CatalogueService();
-        $id = (int) $args['id'];
-        $coffretType = $service->getCoffretById($id);
-        if (empty($coffretType)) {
-            throw new HttpNotFoundException($rq, "ID correspondant non trouvé dans la base de donnée");
+
+        try {
+            $coffretType = $service->getCoffretById((int) $args['id']);
+        } catch (DataErrorException $e) {
+            throw new HttpBadRequestException($rq, $e->getMessage());
+        } catch (NotFoundException $e) {
+            throw new HttpNotFoundException($rq, $e->getMessage());
         }
 
         $view = Twig::fromRequest($rq);

@@ -15,17 +15,19 @@ class GetCategorieIDPrestationsAction extends AbstractAction
 
     public function __invoke(Request $rq, Response $rs, array $args): Response
     {
-
-        if (!isset($args['id']) || !ctype_digit($args['id'])) {
-            throw new HttpBadRequestException($rq, "ID de catégorie incorrecte");
-        }
-        $service = new CatalogueService();
         $id = (int) $args['id'];
-        $categorie = $service->getCategorieById($id);
-        if (empty($categorie)) {
-            throw new HttpNotFoundException($rq, "ID correspondant non trouvé dans la base de donnée");
+        $service = new CatalogueService();
+
+        try {
+            $categorie = $service->getCategorieById($id);
+        } catch (DataErrorException $e) {
+            throw new HttpBadRequestException($rq, $e->getMessage());
+        } catch (NotFoundException $e) {
+            throw new HttpNotFoundException($rq, $e->getMessage());
         }
+
         $prestations = $service->getPrestationsByCategorie($id);
+
         $view = Twig::fromRequest($rq);
 
         return $view->render($rs, 'categorieIDPrestationsView.twig', [

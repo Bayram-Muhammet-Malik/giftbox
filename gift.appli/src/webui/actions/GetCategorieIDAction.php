@@ -13,14 +13,16 @@ class GetCategorieIDAction extends AbstractAction {
 
     public function __invoke(Request $rq, Response $rs, array $args): Response {
 
-        if (!isset($args['id']) || !ctype_digit($args['id'])) {
-            throw new HttpBadRequestException($rq, "ID de catégorie incorrect");
-        }
         $service = new CatalogueService();
-        $categorie = $service->getCategorieById((int)$args['id']);
-        if (empty($categorie)) {
-            throw new HttpNotFoundException($rq, "ID correspondant non trouvé dans la base de données");
+
+        try {
+            $categorie = $service->getCategorieById((int)$args['id']);
+        } catch (DataErrorException $e) {
+            throw new HttpBadRequestException($rq, $e->getMessage());
+        } catch (NotFoundException $e) {
+            throw new HttpNotFoundException($rq, $e->getMessage());
         }
+
         $view = Twig::fromRequest($rq);
 
         return $view->render($rs, 'categorieIDView.twig', [

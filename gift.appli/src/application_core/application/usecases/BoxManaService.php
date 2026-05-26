@@ -8,7 +8,7 @@ use \gift\core\application\exceptions\UnauthorizedException;
 use gift\core\application\domain\entities\Box;
 use gift\core\application\domain\entities\Prestation;
 
-class BoxService implements BoxInterface {
+class BoxManaService implements BoxManaInterface {
 
     public function createBox(string $libelle, string $description, bool $kdo, ?string $message_kdo, int $createur_id): array{
         if ($kdo && empty($message_kdo)) throw new DataErrorException("Message cadeau obligatoire pour une box cadeau");

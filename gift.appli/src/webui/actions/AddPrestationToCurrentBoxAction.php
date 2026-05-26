@@ -5,6 +5,7 @@ namespace gift\webui\actions;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use gift\core\application\usecases\BoxManaService;
 
 class AddPrestationToCurrentBoxAction extends AbstractAction
 {
@@ -15,6 +16,7 @@ class AddPrestationToCurrentBoxAction extends AbstractAction
         }
 
         $boxId = $_SESSION['box_id'] ?? null;
+        $createurId = $_SESSION['user_id'] ?? null;
         $prestationId = $args['id'] ?? null;
 
         if ($boxId === null) {
@@ -22,13 +24,18 @@ class AddPrestationToCurrentBoxAction extends AbstractAction
             return $response->withStatus(400);
         }
 
+        if ($createurId === null) {
+            $response->getBody()->write('Utilisateur non connecté');
+            return $response->withStatus(401);
+        }
+
         if ($prestationId === null) {
             $response->getBody()->write('Prestation manquante');
             return $response->withStatus(400);
         }
 
-        $service = $this->container->get('box.service');
-        $service->addPrestationToBox((int)$boxId, (string)$prestationId);
+        $service = new BoxManaService();
+        $service->addPrestations((int)$boxId, (int)$prestationId, 1, (int)$createurId);
 
         return $response
             ->withHeader('Location', '/box/current')

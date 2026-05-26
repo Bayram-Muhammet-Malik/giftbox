@@ -9,7 +9,7 @@ services:
       context: build
       dockerfile: 8.4-cli.Dockerfile
     ports:
-      - "80:80"
+      - "17550:80"
     volumes :
       - ./gift.appli/:/var/php
       - ./images/img:/var/php/public/img
@@ -29,7 +29,7 @@ services:
     env_file:
       - .database_env
     ports:
-      - "3306:3306"
+      - "17551:3306"
     volumes:
       - ./data:/var/lib/mysql
     networks:
@@ -40,7 +40,7 @@ services:
   adminer:
     image: adminer:5.4.2
     ports:
-      - "8080:8080"
+      - "17552:8080"
+    command: ["php", "-S", "0.0.0.0:8080", "-t", "/var/www/html"]
     networks:
       - gift.net
-

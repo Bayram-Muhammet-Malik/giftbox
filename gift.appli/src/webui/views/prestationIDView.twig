@@ -13,6 +13,10 @@
         </a>
     </p>
 
+    <form action="/box/add/prestation/{{ id }}" method="post">
+        <button type="submit">Ajouter à la box courante</button>
+    </form>
+
     <p>
         <a href="{{ url_for('categorie_prestations', {'id': categorie_id}) }}">
             Retour à la liste des prestations

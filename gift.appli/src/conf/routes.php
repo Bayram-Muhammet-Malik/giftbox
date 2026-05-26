@@ -19,6 +19,8 @@ use \gift\webui\actions\GetHomeAction;
 use \gift\webui\actions\GetCoffretTypeAction;
 use \gift\webui\actions\GetCoffretTypeIDAction;
 
+use \gift\webui\actions\AddPrestationToCurrentBoxAction;
+
 return function (App $app): App {
     $app->get('/categories', GetCategoriesAction::class)->setName('categories');
     $app->get('/categorie/{id}', GetCategorieIDAction::class)->setName('categorie_id');
@@ -28,6 +30,8 @@ return function (App $app): App {
     $app->get('/', GetHomeAction::class)->setName('home');
     $app->get('/coffret_types', GetCoffretTypeAction::class)->setName('coffret_types');
     $app->get('/coffret_type/{id}', GetCoffretTypeIDAction::class)->setName('coffret_type_detail');
+
+    $app->post('/box/add/prestation/{id}', AddPrestationToCurrentBoxAction::class)->setName('box_add_prestation');
 
     return $app;
 };

@@ -2,11 +2,11 @@
 declare(strict_types=1);
 namespace gift\core\application\usecases;
 
-use \gift\core\application\exceptions\DataErrorException;
-use \gift\core\application\exceptions\NotFoundException;
-use \gift\core\application\exceptions\UnauthorizedException;
-use gift\core\application\domain\entities\Box;
-use gift\core\application\domain\entities\Prestation;
+use gift\core\application\exceptions\DataErrorException;
+use gift\core\application\exceptions\NotFoundException;
+use gift\core\application\exceptions\UnauthorizedException;
+use gift\core\domain\entities\Box;
+use gift\core\domain\entities\Prestation;
 
 class BoxManaService implements BoxManaInterface {
 
@@ -47,7 +47,7 @@ class BoxManaService implements BoxManaInterface {
             $prestations[$presta_id] = ['quantite' => $quantite];
         }
         $box->prestation()->sync($prestations);
-        
+
         $total = 0;
         foreach ($box->prestation as $p) $total += $p->tarif * $p->pivot->quantite;
         $box->montant = $total;

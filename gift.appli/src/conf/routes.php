@@ -33,5 +33,8 @@ return function (App $app): App {
 
     $app->post('/box/add/prestation/{id}', AddPrestationToCurrentBoxAction::class)->setName('box_add_prestation');
 
+    $app->get('/box/current', DisplayCurrentBoxAction::class)->setName('box_current');
+    $app->post('/box/validate', ValidateCurrentBoxAction::class)->setName('box_validate');
+
     return $app;
 };

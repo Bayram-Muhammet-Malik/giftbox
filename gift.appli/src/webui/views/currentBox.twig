@@ -1,0 +1,30 @@
+{% extends 'layout.twig' %}
+
+{% block title %}Ma Box{% endblock %}
+
+{% block content %}
+
+<h1>{{ box.libelle }}</h1>
+
+<p>{{ box.description }}</p>
+
+<p>Montant : {{ box.montant }} €</p>
+
+<h2>Prestations</h2>
+
+<ul>
+    {% for p in box.prestation %}
+        <li>
+            {{ p.libelle }}
+            (x{{ p.pivot.quantite }})
+        </li>
+    {% endfor %}
+</ul>
+
+<form action="/box/validate" method="post">
+    <button type="submit">
+        Valider la box
+    </button>
+</form>
+
+{% endblock %}

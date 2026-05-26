@@ -7,7 +7,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use gift\core\application\usecases\BoxManaService;
 
-class ValidateCurrentBoxAction extends AbstractAction
+class DisplayCurrentBoxAction extends AbstractAction
 {
     public function __invoke(Request $request, Response $response, array $args): Response
     {
@@ -30,10 +30,10 @@ class ValidateCurrentBoxAction extends AbstractAction
 
         $service = new BoxManaService();
 
-        $service->validateBox((int)$boxId, (int)$createurId);
+        $box = $service->getBox((int)$boxId, (int)$createurId);
 
-        return $response
-            ->withHeader('Location', '/box/current')
-            ->withStatus(302);
+        return $this->render($response, 'currentBox.twig', [
+            'box' => $box
+        ]);
     }
 }

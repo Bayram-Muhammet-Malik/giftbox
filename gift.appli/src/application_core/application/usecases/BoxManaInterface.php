@@ -10,7 +10,7 @@ interface BoxManaInterface {
 
     public function getBox(int $id, int $createur_id): array;
 
-    public function validateBox(int $id, int $createur_id): array;
+    public function validateBox(int $id): array;
 
     public function deliverBox(int $id, int $createur_id): array;
 

@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 namespace gift\core\application\usecases;
 
 use gift\core\application\exceptions\DataErrorException;
@@ -7,101 +8,140 @@ use gift\core\application\exceptions\NotFoundException;
 use gift\core\application\exceptions\UnauthorizedException;
 use gift\core\domain\entities\Box;
 use gift\core\domain\entities\Prestation;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Exception;
 
-class BoxManaService implements BoxManaInterface {
+class BoxManaService implements BoxManaInterface
+{
+    public function createBox(
+        string $libelle,
+        string $description,
+        bool $kdo,
+        ?string $message_kdo
+    ): array {
+        try {
+            if ($kdo && empty($message_kdo)) {
+                throw new DataErrorException("Message cadeau obligatoire pour une box cadeau");
+            }
 
-    public function createBox(string $libelle, string $description, bool $kdo, ?string $message_kdo): array{
-        if ($kdo && empty($message_kdo)) throw new DataErrorException("Message cadeau obligatoire pour une box cadeau");
+            $box = new Box();
+            $box->id = bin2hex(random_bytes(16));
+            $box->token = bin2hex(random_bytes(16));
+            $box->libelle = $libelle;
+            $box->description = $description;
+            $box->montant = 0;
+            $box->kdo = $kdo ? 1 : 0;
+            $box->message_kdo = $message_kdo;
+            $box->statut = 1;
+            //$box->createur_id = $createur_id;
+            $box->save();
 
-        $box = new Box();
-        $box->id = bin2hex(random_bytes(16));
-        $box->token = bin2hex(random_bytes(16));
-        $box->libelle = $libelle;
-        $box->description = $description;
-        $box->montant = 0;
-        $box->kdo = $kdo ? 1 : 0;
-        $box->message_kdo = $message_kdo;
-        $box->statut = 1;
-        $box->save();
-
-        return $box->toArray();
-    }
-
-    public function addPrestations(int $id, int $presta_id, int $quantite, int $createur_id): array{
-        $box = Box::find($id);
-        if (!$box) throw new NotFoundException("Box non trouvée dans la base de donnée.");
-        if ($box->createur_id !== $createur_id) throw new UnauthorizedException("Accès interdit");
-        if ($box->statut !== 1) throw new DataErrorException("Impossible de modifier une box non créée");
-        if ($quantite < 1) throw new DataErrorException("Quantité invalide");
-
-        $presta = Prestation::find($presta_id);
-        if (!$presta) throw new NotFoundException("Prestation non trouvée dans la base de donnée.");
-
-        $prestations = [];
-        foreach ($box->prestation as $p) $prestations[$p->id] = ['quantite' => $p->pivot->quantite];
-
-        if (isset($prestations[$presta_id])) {
-            $prestations[$presta_id]['quantite'] += $quantite;
-        } else {
-            $prestations[$presta_id] = ['quantite' => $quantite];
+            return $box->toArray();
+        } catch (Exception $e) {
+            throw new DataErrorException("Erreur lors de la création de la box");
         }
-        $box->prestation()->sync($prestations);
-        
-        $total = 0;
-        foreach ($box->prestation as $p) $total += $p->tarif * $p->pivot->quantite;
-        $box->montant = $total;
-        $box->save();
-
-        return $box->load('prestation')->toArray();
     }
 
-    public function getBox(int $id, int $createur_id): array{
-        $box = Box::with('prestation')->find($id);
-        if (!$box) throw new NotFoundException("Box non trouvée dans la base de donnée.");
-        if ($box->createur_id !== $createur_id && $box->statut !== 4) throw new UnauthorizedException("Accès interdit");
+    public function addPrestations(
+        int $id,
+        int $presta_id,
+        int $quantite,
+        int $createur_id,
+    ): array {
+        try {
+            $box = Box::with('prestation')->findOrFail($id);
 
-        return $box->toArray();
+            if ($box->createur_id !== $createur_id) {
+                throw new UnauthorizedException("Accès interdit");
+            }
+
+            Prestation::findOrFail($presta_id);
+
+            $prestations = $box->preparePrestationsForSync($presta_id, $quantite);
+
+            $box->prestation()->sync($prestations);
+            $box->load('prestation');
+            $box->recalculateMontant();
+            $box->save();
+
+            return $box->toArray();
+        } catch (ModelNotFoundException $e) {
+            throw new NotFoundException("Box ou prestation non trouvée dans la base de donnée.");
+        } catch (Exception $e) {
+            throw new DataErrorException("Erreur lors de l'ajout de la prestation dans la box");
+        }
     }
 
-    public function validateBox(int $id, int $createur_id): array{
-        $box = Box::with('prestation')->find($id);
-        if (!$box) throw new NotFoundException("Box non trouvée dans la base de donnée.");
-        if ($box->createur_id !== $createur_id) throw new UnauthorizedException("Accès interdit");
-        if ($box->statut !== 1) throw new DataErrorException("La box doit être en état créée");
-        if ($box->prestation->count() < 2) throw new DataErrorException("La box doit contenir au moins 2 prestations");
+    public function getBox(int $id, int $createur_id): array
+    {
+        try {
+            $box = Box::with('prestation')->findOrFail($id);
 
-        $box->statut = 2;
-        $box->save();
+            if ($box->createur_id !== $createur_id && $box->statut !== 4) {
+                throw new UnauthorizedException("Accès interdit");
+            }
 
-        return $box->toArray();
+            return $box->toArray();
+        } catch (ModelNotFoundException $e) {
+            throw new NotFoundException("Box non trouvée dans la base de donnée.");
+        } catch (Exception $e) {
+            throw new DataErrorException("Erreur lors de la récupération de la box");
+        }
     }
 
-    public function deliverBox(int $id, int $createur_id): array{
-        $box = Box::find($id);
-        if (!$box) throw new NotFoundException("Box non trouvée dans la base de donnée.");
-        if ($box->createur_id !== $createur_id) throw new UnauthorizedException("Accès interdit");
-        if ($box->statut !== 2) throw new DataErrorException("La box doit être validée avant livraison");
+    public function validateBox(int $id): array
+    {
+        try {
+            $box = Box::with('prestation')->findOrFail($id);
 
-        $token = bin2hex(random_bytes(16));
+            $box->validate();
+            $box->save();
 
-        $box->token = $token;
-        $box->statut = 3;
-        $box->save();
-
-        $res = $box->toArray();
-        $res['url'] = "/box/$token";
-
-        return $res;
+            return $box->toArray();
+        } catch (ModelNotFoundException $e) {
+            throw new NotFoundException("Box non trouvée dans la base de donnée.");
+        } catch (Exception $e) {
+            throw new DataErrorException("Erreur lors de la validation de la box");
+        }
     }
 
-    public function boxUsed(string $token): array{
-        $box = Box::where('token', $token)->first();
-        if (!$box) throw new NotFoundException("Token invalide");
-        if ($box->statut !== 3) throw new DataErrorException("Box déjà utilisée ou non livrée");
+    public function deliverBox(int $id, int $createur_id): array
+    {
+        try {
+            $box = Box::findOrFail($id);
 
-        $box->statut = 4;
-        $box->save();
+            if ($box->createur_id !== $createur_id) {
+                throw new UnauthorizedException("Accès interdit");
+            }
 
-        return $box->load('prestation')->toArray();
+            $token = bin2hex(random_bytes(16));
+            $box->deliver($token);
+            $box->save();
+
+            $res = $box->toArray();
+            $res['url'] = "/box/$token";
+
+            return $res;
+        } catch (ModelNotFoundException $e) {
+            throw new NotFoundException("Box non trouvée dans la base de donnée.");
+        } catch (Exception $e) {
+            throw new DataErrorException("Erreur lors de la livraison de la box");
+        }
+    }
+
+    public function boxUsed(string $token): array
+    {
+        try {
+            $box = Box::where('token', $token)->firstOrFail();
+
+            $box->markAsUsed();
+            $box->save();
+
+            return $box->load('prestation')->toArray();
+        } catch (ModelNotFoundException $e) {
+            throw new NotFoundException("Token invalide");
+        } catch (Exception $e) {
+            throw new DataErrorException("Erreur lors de l'utilisation de la box");
+        }
     }
 }

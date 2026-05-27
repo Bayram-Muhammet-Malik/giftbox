@@ -20,6 +20,8 @@ use \gift\webui\actions\GetCoffretTypeIDAction;
 use \gift\webui\actions\GetCreateBoxForm;
 use \gift\webui\actions\PostCreateBox;
 
+use \gift\webui\actions\AddPrestationToCurrentBoxAction;
+
 return function (App $app): App {
     $app->get('/categories', GetCategoriesAction::class)->setName('categories');
     $app->get('/categorie/{id}', GetCategorieIDAction::class)->setName('categorie_id');
@@ -31,6 +33,11 @@ return function (App $app): App {
     $app->get('/coffret_type/{id}', GetCoffretTypeIDAction::class)->setName('coffret_type_detail');
     $app->get('/box/create', GetCreateBoxForm::class)->setName('create_coffret');
     $app->post('/box/create', PostCreateBox::class);
+
+    $app->post('/box/add/prestation/{id}', AddPrestationToCurrentBoxAction::class)->setName('box_add_prestation');
+
+    $app->get('/box/current', DisplayCurrentBoxAction::class)->setName('box_current');
+    $app->post('/box/validate', ValidateCurrentBoxAction::class)->setName('box_validate');
 
     return $app;
 };

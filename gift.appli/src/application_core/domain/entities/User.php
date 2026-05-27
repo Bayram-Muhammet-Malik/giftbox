@@ -6,7 +6,7 @@ namespace gift\core\domain\entities;
 use \Illuminate\Database\Eloquent as Eloq;
 class User extends Eloq\Model {
     protected $table = 'user';
-    protected $primarykey = 'id';
+    protected $primaryKey = 'id';
     public $timestamps = false;
     public $keyType = 'string';
 

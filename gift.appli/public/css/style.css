@@ -24,3 +24,76 @@ nav ul {
 main {
     padding: 5px;
 }
+
+input, textarea, select {
+    width: 250px;
+    padding: 9px;
+    margin: 7px 0;
+    border-radius: 12px;
+    border: 1px solid #333333;
+    background-color: transparent;
+    font-size: 1rem;
+}
+
+input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 8px rgba(59,130,246,0.3);
+}
+
+textarea{
+    resize: none;
+}
+
+button, input[type="submit"], .menu-buttons a {
+    font-size: 1rem;
+    cursor: pointer;
+    border: none;
+    background-color: #85aef0;
+    padding: 6px 14px;
+    border-radius: 20px;
+}
+
+button:hover, input[type="submit"]:hover, .menu-buttons a:hover {
+    background-color: #6988ed;
+}
+
+.toggle {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 20px;
+}
+
+.toggle input {
+    display: none;
+}
+
+.toggle span {
+    position: absolute;
+    inset: 0;
+    background: #ccc;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.toggle span::before {
+    content: "";
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    left: 2px;
+    top: 2px;
+    background: white;
+    border-radius: 50%;
+    transition: 0.2s;
+}
+
+.toggle input:checked + span {
+    background: #0077ff;
+}
+
+.toggle input:checked + span::before {
+    transform: translateX(20px);
+}

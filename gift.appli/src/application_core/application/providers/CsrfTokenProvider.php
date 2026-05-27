@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace gift\core\application\providers;
 
-use \gift\core\application\exceptions\UnauthorizedException;
+use \gift\core\application\exceptions\CsrfException;
 
 class CsrfTokenProvider{
     public static function generate() : string {
@@ -19,7 +19,7 @@ class CsrfTokenProvider{
 
         if (!isset($_SESSION['csrf_token']) || !is_string($token) || !hash_equals($_SESSION['csrf_token'], $token)) {
             unset($_SESSION['csrf_token']);
-            throw new UnauthorizedException('Token CSRF invalide');
+            throw new CsrfException('Token CSRF invalide');
         }
 
         unset($_SESSION['csrf_token']);

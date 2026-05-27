@@ -1,55 +1,50 @@
 {% extends 'layout.twig' %}
 {% block title %}Giftbox - Créer une box{% endblock %}
+
 {% block content %}
-    <h1>Créer une nouvelle box</h1>
-    <form action="{{ url_for('create_coffret') }}" method="post">
+<h1>Créer une nouvelle box</h1>
 
-        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+<form action="{{ url_for('create_coffret') }}" method="post">
 
-        <div>
-            <label for="libelle">Libellé</label>
-            <input
-                type="text"
-                id="libelle"
-                name="libelle"
-                value="{{ old.libelle ?? '' }}"
-                required
-            >
-        </div>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
 
-        <div>
-            <label for="description">Description</label>
-            <textarea
-                id="description"
-                name="description"
-            >{{ old.description ?? '' }}</textarea>
-        </div>
+    <input type="text" id="libelle" name="libelle" value="{{ old.libelle ?? '' }}" placeholder="Libellé" required>
+    </br>
+    <textarea id="description" name="description" placeholder="Description">{{ old.description ?? '' }}</textarea>
+    </br>
+    <label class="toggle">
+    <input type="checkbox" id="kdo" name="kdo" value="1" {% if old.kdo is defined and old.kdo %}checked{% endif %}>
+    <span></span>
+    </label>
+    <span>C'est un cadeau ?</span>
+    </br>
+    <div id="message_kdo_wrapper" style="display:none;">
+        <textarea id="message_kdo" name="message_kdo" placeholder="Message du cadeau">{{ old.message_kdo ?? '' }}</textarea>
+        </br>
+    </div>
+    <button type="submit">Créer la box</button>
+    </br>
+    </br>
+    <a href="{{ url_for('coffret_types') }}">Annuler</a>
+</form>
 
-        <div>
-            <label>
-                <input
-                    type="checkbox"
-                    name="kdo"
-                    value="1"
-                    {% if old.kdo is defined and old.kdo %}checked{% endif %}
-                >
-                C'est un cadeau
-            </label>
-        </div>
+<script>
+    const checkbox = document.getElementById('kdo');
+    const wrapper = document.getElementById('message_kdo_wrapper');
+    const textarea = document.getElementById('message_kdo');
 
-        <div>
-            <label for="message_kdo">Message cadeau</label>
-            <textarea
-                id="message_kdo"
-                name="message_kdo"
-            >{{ old.message_kdo ?? '' }}</textarea>
-            <small>Obligatoire si la box est un cadeau</small>
-        </div>
+    function toggleMessage() {
+        if (checkbox.checked) {
+            wrapper.style.display = 'block';
+            textarea.setAttribute('required', 'required');
+        } else {
+            wrapper.style.display = 'none';
+            textarea.removeAttribute('required');
+        }
+    }
 
-        <div>
-            <button type="submit">Créer la box</button>
-            <a href="{{ url_for('coffret_types') }}">Annuler</a>
-        </div>
+    toggleMessage();
+    checkbox.addEventListener('change', toggleMessage);
+</script>
 
-    </form>
 {% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'layout.twig' %}
+{% block title %}Giftbox - Connexion{% endblock %}
+
+{% block content %}
+    <h1>Connexion</h1>
+
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+
+    <form action="/signin" method="post">
+        <div>
+            <label for="user_id">Identifiant :</label>
+            <input type="text" id="user_id" name="user_id" required>
+        </div>
+
+        <div>
+            <label for="password">Mot de passe :</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+
+        <button type="submit">Se connecter</button>
+    </form>
+
+    <p>Pas encore de compte ? <a href="/signup">Inscrivez-vous ici</a>.</p>
+{% endblock %}

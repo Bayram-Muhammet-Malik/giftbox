@@ -19,7 +19,7 @@ use \gift\webui\actions\GetCoffretTypeAction;
 use \gift\webui\actions\GetCoffretTypeIDAction;
 use \gift\webui\actions\GetCreateBoxForm;
 use \gift\webui\actions\PostCreateBox;
-
+use \gift\webui\actions\SigninAction;
 use \gift\webui\actions\AddPrestationToCurrentBoxAction;
 
 return function (App $app): App {
@@ -38,6 +38,8 @@ return function (App $app): App {
 
     $app->get('/box/current', DisplayCurrentBoxAction::class)->setName('box_current');
     $app->post('/box/validate', ValidateCurrentBoxAction::class)->setName('box_validate');
+
+    $app->map(['GET', 'POST'], '/signin', SigninAction::class)->setName('signin');
 
     return $app;
 };

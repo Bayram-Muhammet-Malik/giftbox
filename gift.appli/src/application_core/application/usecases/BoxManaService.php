@@ -16,8 +16,6 @@ class BoxManaService implements BoxManaInterface
         try {
             if ($kdo && empty($message_kdo)) {
                 throw new DataErrorException("Message cadeau obligatoire pour une box cadeau");
-            } else {
-                $message_kdo = null;
             }
 
             $box = new Box();

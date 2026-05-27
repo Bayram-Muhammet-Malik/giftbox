@@ -27,7 +27,11 @@ class PostCreateBox extends AbstractAction
             if (empty($libelle)) throw new DataErrorException("Libellé obligatoire");
 
             try {
-                  $box = (new BoxManaService())->createBox($libelle, filter_var($data['description'] ?? '', FILTER_SANITIZE_SPECIAL_CHARS), isset($data['kdo']) && $data['kdo'] === '1', isset($data['kdo']) && $data['kdo'] === '1');
+                  $box = (new BoxManaService())->createBox(
+                        $libelle,
+                        filter_var($data['description'] ?? '', FILTER_SANITIZE_SPECIAL_CHARS),
+                        isset($data['kdo']) && $data['kdo'] === '1',
+                        !empty($data['message_kdo']) ? filter_var($data['message_kdo'], FILTER_SANITIZE_SPECIAL_CHARS): null);
             } catch (DataErrorException $e) {
                   throw new HttpBadRequestException($rq, $e->getMessage());
             }

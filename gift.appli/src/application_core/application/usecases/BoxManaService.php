@@ -2,27 +2,26 @@
 declare(strict_types=1);
 namespace gift\core\application\usecases;
 
-use \gift\core\application\exceptions\DataErrorException;
-use \gift\core\application\exceptions\NotFoundException;
-use \gift\core\application\exceptions\UnauthorizedException;
-use gift\core\application\domain\entities\Box;
-use gift\core\application\domain\entities\Prestation;
+use gift\core\application\exceptions\DataErrorException;
+use gift\core\application\exceptions\NotFoundException;
+use gift\core\application\exceptions\UnauthorizedException;
+use gift\core\domain\entities\Box;
+use gift\core\domain\entities\Prestation;
 
 class BoxManaService implements BoxManaInterface {
 
-    public function createBox(string $libelle, string $description, bool $kdo, ?string $message_kdo, int $createur_id): array{
+    public function createBox(string $libelle, string $description, bool $kdo, ?string $message_kdo): array{
         if ($kdo && empty($message_kdo)) throw new DataErrorException("Message cadeau obligatoire pour une box cadeau");
 
         $box = new Box();
         $box->id = bin2hex(random_bytes(16));
-        $box->token = null;
+        $box->token = bin2hex(random_bytes(16));
         $box->libelle = $libelle;
         $box->description = $description;
         $box->montant = 0;
         $box->kdo = $kdo ? 1 : 0;
         $box->message_kdo = $message_kdo;
         $box->statut = 1;
-        $box->createur_id = $createur_id;
         $box->save();
 
         return $box->toArray();

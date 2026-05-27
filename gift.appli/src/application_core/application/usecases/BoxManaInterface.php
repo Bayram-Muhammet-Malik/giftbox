@@ -4,7 +4,7 @@ namespace gift\core\application\usecases;
 
 interface BoxManaInterface {
 
-    public function createBox(string $libelle, string $description, bool $kdo, ?string $message_kdo, int $createur_id): array;
+    public function createBox(string $libelle, string $description, bool $kdo, ?string $message_kdo): array;
 
     public function addPrestations(int $id, int $presta_id, int $quantity, int $createur_id): array;
 

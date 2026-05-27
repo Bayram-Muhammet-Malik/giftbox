@@ -1,0 +1,55 @@
+{% extends 'layout.twig' %}
+{% block title %}Giftbox - Créer une box{% endblock %}
+{% block content %}
+    <h1>Créer une nouvelle box</h1>
+    <form action="{{ url_for('create_coffret') }}" method="post">
+
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+        <div>
+            <label for="libelle">Libellé</label>
+            <input
+                type="text"
+                id="libelle"
+                name="libelle"
+                value="{{ old.libelle ?? '' }}"
+                required
+            >
+        </div>
+
+        <div>
+            <label for="description">Description</label>
+            <textarea
+                id="description"
+                name="description"
+            >{{ old.description ?? '' }}</textarea>
+        </div>
+
+        <div>
+            <label>
+                <input
+                    type="checkbox"
+                    name="kdo"
+                    value="1"
+                    {% if old.kdo is defined and old.kdo %}checked{% endif %}
+                >
+                C'est un cadeau
+            </label>
+        </div>
+
+        <div>
+            <label for="message_kdo">Message cadeau</label>
+            <textarea
+                id="message_kdo"
+                name="message_kdo"
+            >{{ old.message_kdo ?? '' }}</textarea>
+            <small>Obligatoire si la box est un cadeau</small>
+        </div>
+
+        <div>
+            <button type="submit">Créer la box</button>
+            <a href="{{ url_for('coffret_types') }}">Annuler</a>
+        </div>
+
+    </form>
+{% endblock %}

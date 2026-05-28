@@ -21,6 +21,7 @@ use \gift\webui\actions\GetCreateBoxForm;
 use \gift\webui\actions\PostCreateBox;
 use \gift\webui\actions\SigninAction;
 use \gift\webui\actions\AddPrestationToCurrentBoxAction;
+use \gift\webui\actions\LogoutAction;
 
 return function (App $app): App {
     $app->get('/categories', GetCategoriesAction::class)->setName('categories');
@@ -41,7 +42,7 @@ return function (App $app): App {
 
     $app->map(['GET', 'POST'], '/signin', SigninAction::class)->setName('signin');
 
-    $app->get('/logout', \gift\webui\actions\LogoutAction::class)->setName('logout');
+    $app->get('/logout', LogoutAction::class)->setName('logout');
 
     return $app;
 };

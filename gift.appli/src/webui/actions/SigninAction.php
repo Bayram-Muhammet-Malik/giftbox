@@ -8,8 +8,8 @@ use Psr\Http\Message\ServerRequestInterface;
 
 use Slim\Views\Twig;
 
-use gift\core\application\providers\AuthnProvider;
-use gift\core\application\providers\CsrfTokenProvider;
+use gift\webui\providers\AuthnProvider;
+use gift\webui\providers\CsrfTokenProvider;
 
 use gift\core\application\usecases\AuthnService;
 

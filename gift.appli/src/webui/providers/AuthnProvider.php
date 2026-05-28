@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace gift\core\application\providers;
-use gift\core\application\usecases\AuthnInterface;
+namespace gift\webui\providers;
+use gift\core\application\usecases\AuthnService;
 
 class AuthnProvider implements AuthnProviderInterface {
-    private AuthnInterface $authnService;
+    private AuthnService $authnService;
 
-    public function __construct(AuthnInterface $authnService) {
+    public function __construct(AuthnService $authnService) {
         $this->authnService = $authnService;
     }
 

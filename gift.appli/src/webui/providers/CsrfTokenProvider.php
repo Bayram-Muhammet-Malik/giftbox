@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace gift\core\application\providers;
+namespace gift\webui\providers;
 
 use \gift\core\application\exceptions\CsrfException;
 

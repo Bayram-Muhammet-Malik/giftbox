@@ -18,11 +18,7 @@ use gift\core\application\exceptions\NotFoundException;
 
 class SigninAction
 {
-    public function __invoke(
-        ServerRequestInterface $request,
-        ResponseInterface $response,
-        array $args
-    ): ResponseInterface {
+    public function __invoke(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
 
         if ($request->getMethod() === 'GET') {
 
@@ -46,16 +42,9 @@ class SigninAction
         try {
 
             CsrfTokenProvider::check($csrf);
+            AuthnProvider::signin($user_id, $password);
 
-            $provider = new AuthnProvider(
-                new AuthnService()
-            );
-
-            $provider->signin($user_id, $password);
-
-            return $response
-                ->withHeader('Location', '/')
-                ->withStatus(302);
+            return $response->withHeader('Location', '/')->withStatus(302);
 
         } catch (NotFoundException | DataErrorException $e) {
 

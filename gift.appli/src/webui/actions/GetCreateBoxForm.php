@@ -6,7 +6,7 @@ namespace gift\webui\actions;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Views\Twig;
-use gift\core\application\providers\CsrfTokenProvider;
+use gift\webui\providers\CsrfTokenProvider;
 
 class GetCreateBoxForm extends AbstractAction
 {

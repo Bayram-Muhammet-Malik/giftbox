@@ -5,11 +5,12 @@ namespace gift\webui\actions;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use gift\core\application\providers\CsrfTokenProvider;
+use gift\webui\providers\CsrfTokenProvider;
 use gift\core\application\exceptions\CsrfException;
 use gift\core\application\exceptions\DataErrorException;
 use Slim\Exception\HttpBadRequestException;
 use gift\core\application\usecases\BoxManaService;
+use gift\webui\providers\AuthnProvider;
 use Slim\Views\Twig;
 
 class PostCreateBox extends AbstractAction
@@ -31,7 +32,9 @@ class PostCreateBox extends AbstractAction
                         $libelle,
                         filter_var($data['description'] ?? '', FILTER_SANITIZE_SPECIAL_CHARS),
                         isset($data['kdo']) && $data['kdo'] === '1',
-                        !empty($data['message_kdo']) ? filter_var($data['message_kdo'], FILTER_SANITIZE_SPECIAL_CHARS): null);
+                        !empty($data['message_kdo']) ? filter_var($data['message_kdo'], FILTER_SANITIZE_SPECIAL_CHARS): null,
+                        AuthnProvider::getSignedInUser()['id']
+                  );
             } catch (DataErrorException $e) {
                   throw new HttpBadRequestException($rq, $e->getMessage());
             }

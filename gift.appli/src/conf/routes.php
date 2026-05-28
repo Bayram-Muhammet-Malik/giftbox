@@ -41,5 +41,7 @@ return function (App $app): App {
 
     $app->map(['GET', 'POST'], '/signin', SigninAction::class)->setName('signin');
 
+    $app->get('/logout', \gift\webui\actions\LogoutAction::class)->setName('logout');
+
     return $app;
 };

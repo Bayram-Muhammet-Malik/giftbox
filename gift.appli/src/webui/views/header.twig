@@ -1,2 +1,8 @@
 <h1>Giftbox</h1>
-<a href="/signin">Se connecter</a>
+
+{% if user %}
+    <p>Bonjour {{ user.user_id }}</p>
+    <a href="/logout">Déconnexion</a>
+{% else %}
+    <a href="/signin">Se connecter</a>
+{% endif %}

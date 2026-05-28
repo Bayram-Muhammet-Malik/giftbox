@@ -24,6 +24,7 @@ $twig->getEnvironment()->addGlobal('img_path', $app->getBasePath() . '/images/im
 $twig->getEnvironment()->addGlobal('menu', [
     ['label' => 'Liste des catégories', 'route' => 'categories']
 ]);
+$twig->getEnvironment()->addGlobal('user', $_SESSION['user'] ?? null);
 $app->add(TwigMiddleware::create($app, $twig));
 
 $app = (require_once __DIR__ . '/routes.php')($app);

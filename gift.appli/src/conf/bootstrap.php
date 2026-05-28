@@ -21,9 +21,7 @@ $twig = Twig::create(__DIR__ . '/../webui/views', [
 ]);
 $twig->getEnvironment()->addGlobal('css_path', $app->getBasePath() . '/css');
 $twig->getEnvironment()->addGlobal('img_path', $app->getBasePath() . '/images/img');
-$twig->getEnvironment()->addGlobal('menu', [
-    ['label' => 'Liste des catégories', 'route' => 'categories']
-]);
+$twig->getEnvironment()->addGlobal('menu', [ ['label' => 'Liste des catégories', 'route' => 'categories'] ]);
 $twig->getEnvironment()->addGlobal('user', $_SESSION['user'] ?? null);
 $app->add(TwigMiddleware::create($app, $twig));
 

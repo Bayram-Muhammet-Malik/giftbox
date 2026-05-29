@@ -23,6 +23,7 @@ use \gift\webui\actions\SigninAction;
 use \gift\webui\actions\AddPrestationToCurrentBoxAction;
 use \gift\webui\actions\LogoutAction;
 use \gift\api\ApiCategories;
+use \gift\api\ApiCoffretId;
 
 return function (App $app): App {
     $app->get('/categories', GetCategoriesAction::class)->setName('categories');
@@ -45,6 +46,7 @@ return function (App $app): App {
 
     $app->get('/logout', LogoutAction::class)->setName('logout');
     $app->get('/api/categories', ApiCategories::class )->setName('api_categories');
+    $app->get('/api/boxes/{id}', ApiCoffretId::class )->setName('api_coffret_id');
 
     return $app;
 };

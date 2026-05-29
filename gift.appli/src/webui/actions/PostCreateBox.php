@@ -33,7 +33,7 @@ class PostCreateBox extends AbstractAction
                         filter_var($data['description'] ?? '', FILTER_SANITIZE_SPECIAL_CHARS),
                         isset($data['kdo']) && $data['kdo'] === '1',
                         !empty($data['message_kdo']) ? filter_var($data['message_kdo'], FILTER_SANITIZE_SPECIAL_CHARS): null,
-                        AuthnProvider::getSignedInUser()['id']
+                        AuthnProvider::getSignedInUser()
                   );
             } catch (DataErrorException $e) {
                   throw new HttpBadRequestException($rq, $e->getMessage());
@@ -42,7 +42,7 @@ class PostCreateBox extends AbstractAction
             $_SESSION['box_id'] = $box['id'];
 
             $view = Twig::fromRequest($rq);
-            return $view->render($rs, 'success.twig', [
+            return $view->render($rs, 'currentBox.twig', [
                   'box' => $box,
             ]);
       }

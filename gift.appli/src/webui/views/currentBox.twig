@@ -5,8 +5,12 @@
 {% block content %}
 
 <h1>{{ box.libelle }}</h1>
-
-<p>{{ box.description }}</p>
+<p><strong>{{ box.description }}</strong></p>
+{% if box.message_kdo %}
+<p>Message du cadeau : {{ box.message_kdo }}</p>
+{% else %}
+<p>Cette box n'est pas un cadeau</p>    
+{% endif %}
 
 <p>Montant : {{ box.montant }} €</p>
 

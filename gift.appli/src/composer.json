@@ -18,7 +18,8 @@
       "gift\\appli\\": "./",
       "gift\\core\\": "application_core/",
       "gift\\infra\\": "infrastructure/",
-      "gift\\webui\\": "webui/"
+      "gift\\webui\\": "webui/",
+      "gift\\api\\": "api/"
     }
   }
 }

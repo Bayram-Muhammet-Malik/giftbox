@@ -15,9 +15,7 @@ class AuthnService implements AuthnInterface
         try {
             $existingUser = User::where('user_id', $user_id)->first();
 
-            if ($existingUser) {
-                throw new DataErrorException("Identifiant déjà utilisé");
-            }
+            if ($existingUser) throw new DataErrorException("Identifiant déjà utilisé");
 
             $user = new User();
             $user->id = bin2hex(random_bytes(16));
@@ -25,10 +23,7 @@ class AuthnService implements AuthnInterface
             $user->password = password_hash($password, PASSWORD_DEFAULT);
             $user->save();
 
-            return $user->toArray();
-
-        } catch (DataErrorException $e) {
-            throw $e;
+            return $user_id;
         } catch (Exception $e) {
             throw new DataErrorException("Erreur lors de l'inscription");
         }
@@ -39,20 +34,12 @@ class AuthnService implements AuthnInterface
         try {
             $user = User::where('user_id', $user_id)->first();
 
-            if (!$user) {
-                throw new NotFoundException("Utilisateur non trouvé");
-            }
+            if (!$user) throw new NotFoundException("Utilisateur non trouvé");
 
-            if (!password_verify($password, $user->password)) {
-                throw new DataErrorException("Mot de passe incorrect");
-            }
+            if (!password_verify($password, $user->password)) throw new DataErrorException("Mot de passe incorrect");
 
             return $user->toArray();
 
-        } catch (NotFoundException $e) {
-            throw $e;
-        } catch (DataErrorException $e) {
-            throw $e;
         } catch (Exception $e) {
             throw new DataErrorException("Erreur lors de l'authentification");
         }

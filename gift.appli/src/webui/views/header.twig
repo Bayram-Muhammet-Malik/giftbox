@@ -1,7 +1,7 @@
 <h1>Giftbox</h1>
 
 {% if user %}
-    <p>Bonjour {{ user.user_id }}</p>
+    <p>Bonjour {{ user }}</p>
     <a href="/logout">Déconnexion</a>
 {% else %}
     <a href="/signin">Se connecter</a>

@@ -6,6 +6,12 @@ namespace gift\webui\actions;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use gift\core\application\usecases\BoxManaService;
+use gift\core\application\usecases\AuthzService;
+use gift\core\application\usecases\AuthzInterface;
+use gift\webui\providers\AuthnProvider;
+use Slim\Exception\HttpForbiddenException;
+
+
 
 class ValidateCurrentBoxAction extends AbstractAction
 {
@@ -28,9 +34,13 @@ class ValidateCurrentBoxAction extends AbstractAction
             return $response->withStatus(401);
         }
 
+        $authzService = new AuthzService();
+        if (!$authzService->isGranted(AuthnProvider::getSignedInUser(), AuthzInterface::CREATE_BOX, $boxId)) {
+            throw new HttpForbiddenException($request, 'Action non autorisée');
+        }
         $service = new BoxManaService();
 
-        $service->validateBox((int)$boxId, (int)$createurId);
+        $service->validateBox((int) $boxId, (int) $createurId);
 
         return $response
             ->withHeader('Location', '/box/current')

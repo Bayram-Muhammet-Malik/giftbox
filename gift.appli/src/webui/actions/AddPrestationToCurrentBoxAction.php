@@ -6,6 +6,10 @@ namespace gift\webui\actions;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use gift\core\application\usecases\BoxManaService;
+use gift\core\application\usecases\AuthzService;
+use gift\core\application\usecases\AuthzInterface;
+use gift\webui\providers\AuthnProvider;
+use Slim\Exception\HttpForbiddenException;
 
 class AddPrestationToCurrentBoxAction extends AbstractAction
 {
@@ -32,6 +36,11 @@ class AddPrestationToCurrentBoxAction extends AbstractAction
         if ($prestationId === null) {
             $response->getBody()->write('Prestation manquante');
             return $response->withStatus(400);
+        }
+
+        $authzService = new AuthzService();
+        if (!$authzService->isGranted(AuthnProvider::getSignedInUser(), AuthzInterface::CREATE_BOX, $boxId)) {
+            throw new HttpForbiddenException($request, 'Action non autorisée');
         }
 
         $service = new BoxManaService();

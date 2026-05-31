@@ -9,7 +9,10 @@ use gift\webui\providers\CsrfTokenProvider;
 use gift\core\application\exceptions\CsrfException;
 use gift\core\application\exceptions\DataErrorException;
 use Slim\Exception\HttpBadRequestException;
+use Slim\Exception\HttpForbiddenException;
 use gift\core\application\usecases\BoxManaService;
+use gift\core\application\usecases\AuthzService;
+use gift\core\application\usecases\AuthzInterface;
 use gift\webui\providers\AuthnProvider;
 use Slim\Views\Twig;
 
@@ -24,15 +27,21 @@ class PostCreateBox extends AbstractAction
                   throw new HttpBadRequestException($rq, 'Token CSRF invalide');
             }
 
+            $authzService = new AuthzService();
+            if (!$authzService->isGranted(AuthnProvider::getSignedInUser(), AuthzInterface::CREATE_BOX)) {
+                  throw new HttpForbiddenException($rq, 'Action non autorisée');
+            }
+
             $libelle = filter_var($data['libelle'] ?? '', FILTER_SANITIZE_SPECIAL_CHARS);
-            if (empty($libelle)) throw new DataErrorException("Libellé obligatoire");
+            if (empty($libelle))
+                  throw new DataErrorException("Libellé obligatoire");
 
             try {
                   $box = (new BoxManaService())->createBox(
                         $libelle,
                         filter_var($data['description'] ?? '', FILTER_SANITIZE_SPECIAL_CHARS),
                         isset($data['kdo']) && $data['kdo'] === '1',
-                        !empty($data['message_kdo']) ? filter_var($data['message_kdo'], FILTER_SANITIZE_SPECIAL_CHARS): null,
+                        !empty($data['message_kdo']) ? filter_var($data['message_kdo'], FILTER_SANITIZE_SPECIAL_CHARS) : null,
                         AuthnProvider::getSignedInUser()['id']
                   );
             } catch (DataErrorException $e) {

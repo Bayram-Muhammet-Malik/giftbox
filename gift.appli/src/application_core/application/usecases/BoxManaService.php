@@ -12,7 +12,8 @@ use Exception;
 
 class BoxManaService implements BoxManaInterface
 {
-    public function createBox(string $libelle, string $description, bool $kdo, ?string $message_kdo, string $createur_id): array {
+    public function createBox(string $libelle, string $description, bool $kdo, ?string $message_kdo, string $createur_id): array
+    {
         try {
             if ($kdo && empty($message_kdo)) {
                 throw new DataErrorException("Message cadeau obligatoire pour une box cadeau");
@@ -36,7 +37,8 @@ class BoxManaService implements BoxManaInterface
         }
     }
 
-    public function addPrestations(int $id, int $presta_id, int $quantite): array {
+    public function addPrestations(int $id, int $presta_id, int $quantite): array
+    {
         try {
             $box = Box::with('prestation')->findOrFail($id);
 

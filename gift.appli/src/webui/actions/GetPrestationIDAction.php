@@ -12,6 +12,7 @@ use Slim\Views\Twig;
 use gift\core\application\usecases\CatalogueService;
 use gift\core\application\exceptions\DataErrorException;
 use gift\core\application\exceptions\NotFoundException;
+use gift\webui\providers\CsrfTokenProvider;
 
 class GetPrestationIDAction extends AbstractAction {
 

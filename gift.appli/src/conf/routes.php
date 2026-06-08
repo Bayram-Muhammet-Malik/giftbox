@@ -5,7 +5,6 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 // Connexion BD
 use gift\infra\Eloquent;
-use gift\webui\actions\GetFormulaire;
 Eloquent::init(__DIR__ . '/gift.db.conf.ini');
 
 use \Slim\App;
@@ -20,7 +19,7 @@ use \gift\webui\actions\GetCoffretTypeAction;
 use \gift\webui\actions\GetCoffretTypeIDAction;
 use \gift\webui\actions\GetCreateBoxForm;
 use \gift\webui\actions\PostCreateBox;
-use \gift\webui\actions\AddPrestationToCurrentBoxAction;
+use \gift\webui\actions\PostAddPrestationToCurrentBoxAction;
 
 use \gift\webui\actions\SigninAction;
 use \gift\webui\actions\SignupAction;

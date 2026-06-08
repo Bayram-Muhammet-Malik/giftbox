@@ -11,7 +11,7 @@ use gift\core\application\usecases\AuthzInterface;
 use gift\webui\providers\AuthnProvider;
 use Slim\Exception\HttpForbiddenException;
 
-class AddPrestationToCurrentBoxAction extends AbstractAction
+class PostAddPrestationToCurrentBoxAction extends AbstractAction
 {
     public function __invoke(Request $request, Response $response, array $args): Response
     {
@@ -20,7 +20,7 @@ class AddPrestationToCurrentBoxAction extends AbstractAction
         }
 
         $boxId = $_SESSION['box_id'] ?? null;
-        $createurId = $_SESSION['user_id'] ?? null;
+        $createurId = $_SESSION['id'] ?? null;
         $prestationId = $args['id'] ?? null;
 
         if ($boxId === null) {
@@ -38,13 +38,14 @@ class AddPrestationToCurrentBoxAction extends AbstractAction
             return $response->withStatus(400);
         }
 
+        //auth et authorization
         $authzService = new AuthzService();
-        if (!$authzService->isGranted(AuthnProvider::getSignedInUser(), AuthzInterface::CREATE_BOX, $boxId)) {
+        if (!$authzService->isGranted(AuthnProvider::getSignedInUser()['user_id'], AuthzInterface::CREATE_BOX, $boxId)) {
             throw new HttpForbiddenException($request, 'Action non autorisée');
         }
 
         $service = new BoxManaService();
-        $service->addPrestations((int)$boxId, (int)$prestationId, 1, (int)$createurId);
+        $service->addPrestations((int)$boxId, (int)$prestationId, 1);
 
         return $response
             ->withHeader('Location', '/box/current')

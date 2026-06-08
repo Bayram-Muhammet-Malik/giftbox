@@ -51,7 +51,6 @@ class PostCreateBox extends AbstractAction
 
             $_SESSION['box_id'] = $box['id'];
 
-            return $rs->withHeader('Location', RouteContext::fromRequest($rq)->getRouteParser()->urlFor('current_coffret'))->withStatus(302);
-
+            return $rs->withHeader('Location',  RouteContext::fromRequest($rq)->getRouteParser()->urlFor('current_coffret'))->withStatus(302);
       }
 }

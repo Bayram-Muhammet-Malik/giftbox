@@ -16,7 +16,7 @@ use gift\core\application\exceptions\NotFoundException;
 class GetPrestationIDAction extends AbstractAction {
 
     public function __invoke(Request $rq, Response $rs, array $args): Response {
-        $service = new CatalogueService();    
+        $service = new CatalogueService();   
         
         try {
             $prestation = $service->getPrestationById($args['id']);
@@ -26,13 +26,17 @@ class GetPrestationIDAction extends AbstractAction {
             throw new HttpNotFoundException($rq, $e->getMessage());
         }
 
+        $token = CsrfTokenProvider::generate();
+
         $view = Twig::fromRequest($rq);
 
         return $view->render($rs, 'prestationIDView.twig', [
             'id' => $prestation['id'],
             'libelle' => $prestation['libelle'],
             'description' => $prestation['description'],
-            'categorie_id' => $prestation['cat_id']
+            'categorie_id' => $prestation['cat_id'],
+            'currentbox' => isset($_SESSION['box_id']),
+            'csrf_token' => $token
         ]);
     }
 }

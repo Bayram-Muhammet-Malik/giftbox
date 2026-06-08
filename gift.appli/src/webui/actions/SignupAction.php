@@ -17,20 +17,18 @@ use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Exception\HttpUnauthorizedException;
 
-class SigninAction
+class SignupAction
 {
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
-
         if ($request->getMethod() === 'GET') {
-
             return Twig::fromRequest($request)
                 ->render($response, 'signinupView.twig', [
-                    'page_title' => 'Connexion',
-                    'form_action' => '/signin',
-                    'button_label' => 'Se connecter',
-                    'alt_text' => 'Pas encore de compte ?',
-                    'alt_link' => '/signup',
-                    'alt_link_label' => 'Inscrivez-vous ici',
+                    'page_title' => 'Inscription',
+                    'form_action' => '/signup',
+                    'button_label' => "S'inscrire",
+                    'alt_text' => 'Déjà un compte ?',
+                    'alt_link' => '/signin',
+                    'alt_link_label' => 'Connectez-vous ici',
                     'csrf' => CsrfTokenProvider::generate()
                 ]);
         } else if ($request->getMethod() === 'POST') {
@@ -41,21 +39,21 @@ class SigninAction
             $csrf = $data['csrf'] ?? '';
 
             try {
+
                 CsrfTokenProvider::check($csrf);
-                AuthnProvider::signin($user_id, $password);
+                AuthnProvider::register($user_id, $password);
 
                 return $response->withHeader('Location', '/')->withStatus(302);
 
             } catch (NotFoundException $e) {
                 throw new HttpNotFoundException($request, $e->getMessage());
+
             } catch (DataErrorException $e) {
                 throw new HttpBadRequestException($request, $e->getMessage());
+
             } catch (AuthnException $e) {
                 throw new HttpUnauthorizedException($request, $e->getMessage());
             }
         }
     }
 }
-//login
-//aurore06@example.org
-//aurore06

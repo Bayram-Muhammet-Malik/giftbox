@@ -20,7 +20,7 @@ nav ul {
     list-style-type: none;
     padding: 0;
     display: inline-flex;
-    gap: 15px;
+    gap: 5px;
 }
 
 main {

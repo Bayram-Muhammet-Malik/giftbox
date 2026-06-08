@@ -20,9 +20,12 @@ use \gift\webui\actions\GetCoffretTypeAction;
 use \gift\webui\actions\GetCoffretTypeIDAction;
 use \gift\webui\actions\GetCreateBoxForm;
 use \gift\webui\actions\PostCreateBox;
-use \gift\webui\actions\SigninAction;
 use \gift\webui\actions\AddPrestationToCurrentBoxAction;
-use \gift\webui\actions\LogoutAction;
+
+use \gift\webui\actions\SigninAction;
+use \gift\webui\actions\SignupAction;
+use \gift\webui\actions\GetLogoutAction;
+
 use \gift\api\ApiCategories;
 use \gift\api\ApiCoffretId;
 use \gift\api\ApiPrestations;
@@ -41,14 +44,12 @@ return function (App $app): App {
     $app->get('/box/create', GetCreateBoxForm::class)->setName('create_coffret');
     $app->post('/box/create', PostCreateBox::class);
 
-    $app->post('/box/add/prestation/{id}', AddPrestationToCurrentBoxAction::class)->setName('box_add_prestation');
-
-    $app->get('/box/current', DisplayCurrentBoxAction::class)->setName('box_current');
-    $app->post('/box/validate', ValidateCurrentBoxAction::class)->setName('box_validate');
+    $app->post('/box/add/prestation/{id}', PostAddPrestationToCurrentBoxAction::class)->setName('box_add_prestation');
 
     $app->map(['GET', 'POST'], '/signin', SigninAction::class)->setName('signin');
+    $app->map(['GET', 'POST'], '/signup', SignupAction::class)->setName('signup');
+    $app->get('/logout', GetLogoutAction::class)->setName('logout');
 
-    $app->get('/logout', LogoutAction::class)->setName('logout');
     $app->get('/api/categories', ApiCategories::class )->setName('api_categories');
     $app->get('/api/prestations', ApiPrestations::class )->setName('api_prestations');
     $app->get('/api/boxes/{id}', ApiCoffretId::class )->setName('api_coffret_id');

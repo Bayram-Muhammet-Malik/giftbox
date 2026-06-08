@@ -9,6 +9,7 @@ class User extends Eloq\Model {
     protected $primaryKey = 'id';
     public $timestamps = false;
     public $keyType = 'string';
+    public $incrementing = false;
 
     protected $fillable = ['id', 'user_id', 'password'];
 

@@ -1,17 +1,18 @@
 {% extends 'layout.twig' %}
-{% block title %}Giftbox - Connexion{% endblock %}
+
+{% block title %}Giftbox - {{ page_title }}{% endblock %}
 
 {% block content %}
-    <h1>Connexion</h1>
+    <h1>{{ page_title }}</h1>
 
     {% if error %}
         <p class="error">{{ error }}</p>
     {% endif %}
 
-    <form action="/signin" method="post">
+    <form action="{{ form_action }}" method="post">
         <div>
-            <label for="user_id">Identifiant :</label>
-            <input type="text" id="user_id" name="user_id" required>
+            <label for="user_id">Email :</label>
+            <input type="email" id="user_id" name="user_id" required>
         </div>
 
         <div>
@@ -20,9 +21,9 @@
         </div>
 
         <input type="hidden" name="csrf" value="{{ csrf }}">
-        
-        <button type="submit">Se connecter</button>
+
+        <button type="submit">{{ button_label }}</button>
     </form>
 
-    <p>Pas encore de compte ? <a href="/signup">Inscrivez-vous ici</a>.</p>
+    <p>{{ alt_text }} <a href="{{ alt_link }}">{{ alt_link_label }}</a>.</p>
 {% endblock %}

@@ -8,6 +8,8 @@ interface CatalogueInterface {
 
     public function getCategorieById(int $id): array;
 
+    public function getPrestations(): array;
+
     public function getPrestationById(string $id): array;
 
     public function getPrestationsByCategorie(int $categ_id): array;

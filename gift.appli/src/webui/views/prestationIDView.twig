@@ -8,7 +8,8 @@
     <p>{{ id }} - {{ libelle }} - {{ description }}</p>
 
     {% if currentbox %}
-    <form action="/box/add/prestation/{{ id }}" method="post">
+    <form action="{{url_for('box_add_prestation', {'id': id})}}" method="post">
+        <input type="hidden" name="csrf_token" value="{{csrf_token}}">
         <button type="submit">Ajouter à la box courante</button>
     </form>
     {% endif %}

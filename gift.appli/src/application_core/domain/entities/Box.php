@@ -32,7 +32,7 @@ class Box extends Eloq\Model {
             return true;
       }
 
-      public function preparePrestationsForSync(int $presta_id, int $quantite): array {
+      public function preparePrestationsForSync(string $presta_id, int $quantite): array {
             if ($quantite < 1) throw new DataErrorException("Quantité invalide");
 
             $this->canBeModified();

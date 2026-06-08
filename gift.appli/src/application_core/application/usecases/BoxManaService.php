@@ -37,7 +37,7 @@ class BoxManaService implements BoxManaInterface
         }
     }
 
-    public function addPrestations(string $id, int $presta_id, int $quantite): array
+    public function addPrestations(string $id, string $presta_id, int $quantite): array
     {
         try {
             $box = Box::with('prestation')->findOrFail($id);
@@ -55,7 +55,7 @@ class BoxManaService implements BoxManaInterface
         } catch (ModelNotFoundException $e) {
             throw new NotFoundException("Box ou prestation non trouvée dans la base de donnée.");
         } catch (Exception $e) {
-            throw new DataErrorException("Erreur lors de l'ajout de la prestation dans la box");
+            throw new DataErrorException($e->getMessage());
         }
     }
 

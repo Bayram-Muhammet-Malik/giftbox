@@ -45,7 +45,7 @@ return function (App $app): App {
     $app->post('/box/create', PostCreateBox::class);
     $app->get('/box/current', GetCurrentBox::class)->setName('current_coffret');
 
-    $app->post('/box/add/prestation/{id}', PostAddPrestationToCurrentBoxAction::class)->setName('box_add_prestation');
+    $app->post('/prestation/{id}', PostAddPrestationToCurrentBoxAction::class)->setName('box_add_prestation');
 
     $app->map(['GET', 'POST'], '/signin', SigninAction::class)->setName('signin');
     $app->map(['GET', 'POST'], '/signup', SignupAction::class)->setName('signup');

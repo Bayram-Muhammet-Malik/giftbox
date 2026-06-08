@@ -15,6 +15,7 @@ use gift\core\application\usecases\AuthzService;
 use gift\core\application\usecases\AuthzInterface;
 use gift\webui\providers\AuthnProvider;
 use Slim\Views\Twig;
+use Slim\Routing\RouteContext;
 
 class PostCreateBox extends AbstractAction
 {
@@ -50,9 +51,7 @@ class PostCreateBox extends AbstractAction
 
             $_SESSION['box_id'] = $box['id'];
 
-            $view = Twig::fromRequest($rq);
-            return $view->render($rs, 'currentBox.twig', [
-                  'box' => $box,
-            ]);
+            return $rs->withHeader('Location', RouteContext::fromRequest($rq)->getRouteParser()->urlFor('current_coffret'))->withStatus(302);
+
       }
 }

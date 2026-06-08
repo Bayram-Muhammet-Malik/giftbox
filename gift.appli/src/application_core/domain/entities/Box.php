@@ -8,6 +8,7 @@ class Box extends Eloq\Model {
       protected $table = 'box';
       protected $primarykey = 'id';
       public $timestamps = false;
+      public $incrementing = false;
 
       public function user() {
             return $this->belongsTo(User::class, 'createur_id');

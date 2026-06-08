@@ -20,8 +20,8 @@ class AuthzService implements AuthzInterface
                         case self::VALIDATE_BOX:
                         case self::ADD_PRESTATION:
                         case self::GENERATE_URL:
-                              $box_data = Box::where('$id', $box_id)-first();
-                              return $user['role'] >= 1 && $user['user_id'] === $box_data['createur_id'];
+                              $box = Box::findOrFail($box_id);
+                              return $user['role'] >= 1 && $user['id'] === $box['createur_id'];
                   }
 
             } catch (QueryException $e) {

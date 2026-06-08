@@ -37,7 +37,7 @@ class BoxManaService implements BoxManaInterface
         }
     }
 
-    public function addPrestations(int $id, int $presta_id, int $quantite): array
+    public function addPrestations(string $id, int $presta_id, int $quantite): array
     {
         try {
             $box = Box::with('prestation')->findOrFail($id);
@@ -59,7 +59,7 @@ class BoxManaService implements BoxManaInterface
         }
     }
 
-    public function getBox(int $id): array
+    public function getBox(string $id): array
     {
         try {
             $box = Box::with('prestation')->findOrFail($id);
@@ -72,7 +72,7 @@ class BoxManaService implements BoxManaInterface
         }
     }
 
-    public function validateBox(int $id): array
+    public function validateBox(string $id): array
     {
         try {
             $box = Box::with('prestation')->findOrFail($id);

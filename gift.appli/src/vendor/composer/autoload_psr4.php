@@ -11,6 +11,7 @@ return array(
     'gift\\infra\\' => array($baseDir . '/infrastructure'),
     'gift\\core\\' => array($baseDir . '/application_core'),
     'gift\\appli\\' => array($baseDir . '/'),
+    'gift\\api\\' => array($baseDir . '/api'),
     'Twig\\' => array($vendorDir . '/twig/twig/src'),
     'Symfony\\Polyfill\\Php85\\' => array($vendorDir . '/symfony/polyfill-php85'),
     'Symfony\\Polyfill\\Php84\\' => array($vendorDir . '/symfony/polyfill-php84'),

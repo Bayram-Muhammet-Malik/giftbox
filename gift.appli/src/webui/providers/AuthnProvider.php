@@ -4,8 +4,9 @@ declare(strict_types=1);
 namespace gift\webui\providers;
 use gift\core\application\usecases\AuthnService;
 use gift\core\application\exceptions\NotLoggedException;
+use gift\webui\providers\AuthnProviderInterface;
 
-class AuthnProvider implements AuthnProviderInterface {
+class AuthnProvider {
     public static function signin(string $user_id, string $password): array {
         $user = (new AuthnService)->signin($user_id, $password);
 

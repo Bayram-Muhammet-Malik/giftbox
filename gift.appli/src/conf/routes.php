@@ -20,6 +20,7 @@ use \gift\webui\actions\GetCoffretTypeIDAction;
 use \gift\webui\actions\GetCreateBoxForm;
 use \gift\webui\actions\PostCreateBox;
 use \gift\webui\actions\PostAddPrestationToCurrentBoxAction;
+use \gift\webui\actions\GetCurrentBox;
 
 use \gift\webui\actions\SigninAction;
 use \gift\webui\actions\SignupAction;
@@ -31,17 +32,18 @@ use \gift\api\ApiPrestations;
 use \gift\api\ApiCategorieIDPrestations;
 
 return function (App $app): App {
+    $app->get('/', GetHomeAction::class)->setName('home');
     $app->get('/categories', GetCategoriesAction::class)->setName('categories');
     $app->get('/categorie/{id}', GetCategorieIDAction::class)->setName('categorie_id');
     $app->get('/prestations', GetPrestationsAction::class)->setName('prestations');
     $app->get('/prestation/{id}', GetPrestationIDAction::class)->setName('prestation_id');
     $app->get('/categorie/{id}/prestations', GetCategorieIDPrestationsAction::class)->setName('categorie_prestations');
-
-    $app->get('/', GetHomeAction::class)->setName('home');
     $app->get('/coffret_types', GetCoffretTypeAction::class)->setName('coffret_types');
     $app->get('/coffret_type/{id}', GetCoffretTypeIDAction::class)->setName('coffret_type_detail');
+
     $app->get('/box/create', GetCreateBoxForm::class)->setName('create_coffret');
     $app->post('/box/create', PostCreateBox::class);
+    $app->get('/box/current', GetCurrentBox::class)->setName('current_coffret');
 
     $app->post('/box/add/prestation/{id}', PostAddPrestationToCurrentBoxAction::class)->setName('box_add_prestation');
 

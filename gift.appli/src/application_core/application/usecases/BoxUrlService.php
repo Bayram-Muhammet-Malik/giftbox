@@ -11,7 +11,7 @@ use Exception;
 
 class BoxManaService implements BoxManaInterface
 {
-    public function deliverBox(int $id): array {
+    public function deliverBox(string $id): array {
         try {
             $box = Box::findOrFail($id);
 

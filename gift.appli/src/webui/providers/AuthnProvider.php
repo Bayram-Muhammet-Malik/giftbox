@@ -9,7 +9,7 @@ class AuthnProvider {
     public static function signin(string $user_id, string $password): array {
         $user = (new AuthnService)->signin($user_id, $password);
 
-        $_SESSION['user'] = $user;
+        $_SESSION['user'] = $user['id'];
 
         return $user;
     }

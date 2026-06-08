@@ -1,0 +1,26 @@
+{% extends 'layout.twig' %}
+
+{% block title %}Ma Box{% endblock %}
+
+{% block content %}
+
+<h1>{{ box.libelle }}</h1>
+<p><strong>{{ box.description }}</strong></p>
+
+{% if box.message_kdo %}
+<p>{{ box.message_kdo }}</p>
+{% else %}
+<p>Montant : {{ box.montant }} €</p>
+{% endif %}
+
+<h2>Prestations</h2>
+<ul>
+    {% for p in box.prestation %}
+        <li>
+            {{ p.libelle }}
+            (x{{ p.pivot.quantite }})
+        </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

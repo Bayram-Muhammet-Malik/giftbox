@@ -6,6 +6,7 @@
 
 <h1>{{ box.libelle }}</h1>
 <p><strong>{{ box.description }}</strong></p>
+
 {% if box.message_kdo %}
 <p>Message du cadeau : {{ box.message_kdo }}</p>
 {% else %}
@@ -25,10 +26,24 @@
     {% endfor %}
 </ul>
 
-<form action="/box/validate" method="post">
-    <button type="submit">
-        Valider la box
-    </button>
+{% if box.statut == 1 %}
+<form action="{{ url_for('validate_box') }}" method="post">
+    <input type="hidden" name="csrf_token" value="{{csrf_token}}">
+    <button type="submit">Valider la box</button>
 </form>
+{% endif %}
+
+{% if box.statut == 2 %}
+<form action="{{ url_for('generate_url_box') }}" method="post">
+    <input type="hidden" name="csrf_token" value="{{csrf_token}}">
+    <button type="submit">Générer l'URL de partage</button>
+</form>
+{% endif %}
+
+{% if box.statut == 3 %}
+<br>
+<p>URL de partage :</p>
+<input type="text" readonly value="{{ share_url }}">
+{% endif %}
 
 {% endblock %}

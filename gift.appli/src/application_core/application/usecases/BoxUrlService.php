@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use gift\core\domain\entities\Box;
 use Exception;
 
-class BoxManaService implements BoxManaInterface
+class BoxUrlService implements BoxUrlInterface
 {
     public function deliverBox(string $id): array {
         try {

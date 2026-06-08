@@ -15,8 +15,9 @@ class Prestation extends Eloq\Model {
     public function coffret() {
         return $this->belongsToMany(CoffretType::class, 'coffret2presta', 'presta_id', 'coffret_id');
     }
+
     public function box() {
-        return $this->belongsToMany(Box::class, 'box2presta', 'presta_id', 'box_id');
+        return $this->belongsToMany(Box::class, 'box2presta', 'presta_id', 'box_id')->withPivot('quantite');
     }
 
     public function categorie() {

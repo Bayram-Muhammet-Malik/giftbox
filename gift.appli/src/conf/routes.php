@@ -19,8 +19,11 @@ use \gift\webui\actions\GetCoffretTypeAction;
 use \gift\webui\actions\GetCoffretTypeIDAction;
 use \gift\webui\actions\GetCreateBoxForm;
 use \gift\webui\actions\PostCreateBox;
+use \gift\webui\actions\GetCurrentBoxAction;
 use \gift\webui\actions\PostAddPrestationToCurrentBoxAction;
-use \gift\webui\actions\GetCurrentBox;
+use \gift\webui\actions\PostValidateBoxAction;
+use \gift\webui\actions\PostGenerateUrlBoxAction;
+use \gift\webui\actions\GetAccessBoxAction;
 
 use \gift\webui\actions\SigninAction;
 use \gift\webui\actions\SignupAction;
@@ -43,7 +46,10 @@ return function (App $app): App {
 
     $app->get('/box/create', GetCreateBoxForm::class)->setName('create_coffret');
     $app->post('/box/create', PostCreateBox::class);
-    $app->get('/box/current', GetCurrentBox::class)->setName('current_coffret');
+    $app->get('/box/current', GetCurrentBoxAction::class)->setName('current_coffret');
+    $app->post('/box/validate/', PostValidateBoxAction::class)->setName('validate_box');
+    $app->post('/box/generate/', PostGenerateUrlBoxAction::class)->setName('generate_url_box');
+    $app->get('/box/access/{token}', GetAccessBoxAction::class)->setName('access_box');
 
     $app->post('/prestation/{id}', PostAddPrestationToCurrentBoxAction::class)->setName('box_add_prestation');
 

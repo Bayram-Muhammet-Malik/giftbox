@@ -27,10 +27,10 @@ main {
     padding: 5px;
 }
 
-input, textarea, select {
-    width: 250px;
+input, textarea,select {
+    width: 300px;
     padding: 9px;
-    margin: 7px 0;
+    margin: 5px 0;
     border-radius: 12px;
     border: 1px solid #333333;
     background-color: transparent;

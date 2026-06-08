@@ -3,10 +3,11 @@ declare(strict_types=1);
 
 namespace gift\core\domain\entities;
 use \Illuminate\Database\Eloquent as Eloq;
+use gift\core\application\exceptions\DataErrorException;
 
 class Box extends Eloq\Model {
       protected $table = 'box';
-      protected $primarykey = 'id';
+      protected $primaryKey = 'id';
       public $timestamps = false;
       public $incrementing = false;
 
@@ -15,7 +16,7 @@ class Box extends Eloq\Model {
       }
 
       public function prestation() {
-            return $this->belongsToMany(Prestation::class, 'box2presta', 'box_id', 'presta_id');
+      return $this->belongsToMany(Prestation::class, 'box2presta', 'box_id', 'presta_id')->withPivot('quantite');
       }
 
       public function validate(): bool {
@@ -68,8 +69,7 @@ class Box extends Eloq\Model {
       }
 
       public function markAsUsed(): bool {
-            if ($this->statut !== 3) throw new DataErrorException("Box déjà utilisée ou non livrée");
-
+            if ($this->statut !== 3 && $this->statut !== 4) throw new DataErrorException("Box déjà utilisée ou non livrée");
             $this->statut = 4;
 
             return true;

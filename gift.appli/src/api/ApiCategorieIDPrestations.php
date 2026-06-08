@@ -11,15 +11,16 @@ use gift\core\application\exceptions\NotFoundException;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Exception\HttpInternalServerErrorException;
 
-class ApiCoffretId {
+class ApiCategorieIDPrestations {
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
         try {
             $id = (int) $args['id'];
-            $box = (new CatalogueService())->getCoffretById($id);
+            $prestations = (new CatalogueService())->getPrestationsByCategorie($id);
 
             $data = [
-                'type' => 'resource',
-                'box' => $box
+                'type' => 'collection',
+                'count' => count($prestations),
+                'prestations' => $prestations
             ];
 
             $response->getBody()->write(json_encode($data));

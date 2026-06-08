@@ -12,6 +12,7 @@ use \Slim\App;
 
 use \gift\webui\actions\GetCategoriesAction;
 use \gift\webui\actions\GetCategorieIDAction;
+use \gift\webui\actions\GetPrestationsAction;
 use \gift\webui\actions\GetPrestationIDAction;
 use \gift\webui\actions\GetCategorieIDPrestationsAction;
 use \gift\webui\actions\GetHomeAction;
@@ -24,11 +25,14 @@ use \gift\webui\actions\AddPrestationToCurrentBoxAction;
 use \gift\webui\actions\LogoutAction;
 use \gift\api\ApiCategories;
 use \gift\api\ApiCoffretId;
+use \gift\api\ApiPrestations;
+use \gift\api\ApiCategorieIDPrestations;
 
 return function (App $app): App {
     $app->get('/categories', GetCategoriesAction::class)->setName('categories');
     $app->get('/categorie/{id}', GetCategorieIDAction::class)->setName('categorie_id');
-    $app->get('/prestation/{id}', GetPrestationIDAction::class)->setName('prestation');
+    $app->get('/prestations', GetPrestationsAction::class)->setName('prestations');
+    $app->get('/prestation/{id}', GetPrestationIDAction::class)->setName('prestation_id');
     $app->get('/categorie/{id}/prestations', GetCategorieIDPrestationsAction::class)->setName('categorie_prestations');
 
     $app->get('/', GetHomeAction::class)->setName('home');
@@ -46,7 +50,9 @@ return function (App $app): App {
 
     $app->get('/logout', LogoutAction::class)->setName('logout');
     $app->get('/api/categories', ApiCategories::class )->setName('api_categories');
+    $app->get('/api/prestations', ApiPrestations::class )->setName('api_prestations');
     $app->get('/api/boxes/{id}', ApiCoffretId::class )->setName('api_coffret_id');
+    $app->get('/api/categorie/{id}/prestations', ApiCategorieIDPrestations::class )->setName('api_categorie_id_prestations');
 
     return $app;
 };

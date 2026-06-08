@@ -31,7 +31,7 @@ $twig = Twig::create(__DIR__ . '/../webui/views', [
 ]);
 $twig->getEnvironment()->addGlobal('css_path', $app->getBasePath() . '/css');
 $twig->getEnvironment()->addGlobal('img_path', $app->getBasePath() . '/images/img');
-$twig->getEnvironment()->addGlobal('menu', [ ['label' => 'Liste des catégories', 'route' => 'categories'] ]);
+$twig->getEnvironment()->addGlobal('menu', [ ['label' => 'Catégories', 'route' => 'categories'], ['label' => 'Prestations', 'route' => 'prestations'] ]);
 $twig->getEnvironment()->addGlobal('user', $user);
 
 $app->add(TwigMiddleware::create($app, $twig));

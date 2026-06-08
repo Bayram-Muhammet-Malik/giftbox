@@ -29,6 +29,11 @@ class CatalogueService implements CatalogueInterface
         }
     }
 
+    public function getPrestations(): array
+    {
+        return Prestation::all()->toArray();
+    }
+
     public function getPrestationById(string $id): array {
         try {
             return Prestation::findOrFail($id)->toArray();

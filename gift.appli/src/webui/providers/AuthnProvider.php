@@ -20,12 +20,6 @@ class AuthnProvider {
         $_SESSION['user'] = $user['id'];
     }
 
-    public static function register(string $user_id, string $password): void {
-        $user = (new AuthnService)->register($user_id, $password);
-
-        $_SESSION['user'] = $user['id'];
-    }
-
     public static function getSignedInUser(): ?array
     {
         if (!isset($_SESSION['user'])) throw new AuthnException("Non authentifié");

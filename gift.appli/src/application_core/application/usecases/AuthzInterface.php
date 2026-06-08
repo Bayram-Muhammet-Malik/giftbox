@@ -9,5 +9,5 @@ interface AuthzInterface
     public const VALIDATE_BOX = 'validate_box';
     public const ADD_PRESTATION = 'add_prestation';
     public const GENERATE_URL = 'generate_url';
-    public function isGranted(array $user, string $operation, string $box_id): bool;
+    public function isGranted(string $user_id, string $operation, string $box_id): bool;
 }

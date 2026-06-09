@@ -31,7 +31,7 @@ $twig = Twig::create(__DIR__ . '/../webui/views', [
 ]);
 
 $twig->getEnvironment()->addGlobal('css_path', $app->getBasePath() . '/css');
-$twig->getEnvironment()->addGlobal('img_path', $app->getBasePath() . '/images/img/');
+$twig->getEnvironment()->addGlobal('img_path', $app->getBasePath() . '/img/');
 $twig->getEnvironment()->addGlobal('menu', [ ['label' => 'Catégories', 'route' => 'categories'], ['label' => 'Prestations', 'route' => 'prestations'], ['label' => 'Créer une Box', 'route' => 'create_coffret'], ['label' => 'Voir la Box courrante', 'route' => 'current_coffret'] ]);
 $twig->getEnvironment()->addGlobal('user', $user);
 

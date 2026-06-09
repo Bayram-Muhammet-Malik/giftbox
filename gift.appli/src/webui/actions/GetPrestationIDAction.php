@@ -36,6 +36,7 @@ class GetPrestationIDAction extends AbstractAction {
             'libelle' => $prestation['libelle'],
             'description' => $prestation['description'],
             'categorie_id' => $prestation['cat_id'],
+            'image' => $prestation['img'],
             'currentbox' => isset($_SESSION['box_id']),
             'csrf_token' => $token
         ]);

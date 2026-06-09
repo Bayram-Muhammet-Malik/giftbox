@@ -12,8 +12,10 @@ URL Docketu : http://docketu.iutnc.univ-lorraine.fr:16795/
 ### Installation
 - Copiez coller le fichier ``.database_env.dist`` en ``.database_env`` et remplir le fichier
 - Fait de même pour ``gift.appli/src/conf/gift.db.conf.ini.dist`` en ``gift.appli/src/conf/gift.db.conf.ini``
+- Executer les requètes SQL des fichiers ``sql/gift.schema.sql`` puis ``sql/gift.data.sql`` dans adminer (http://localhost:8080 par defaut)
 - Une fois les fichiers complété avec la bonne configuration
 - Lancer docker (s'il n'est pas déjà lancé) puis ouvrez un terminal dans le repertoire racine du projet giftbox et excecutez la commande suivante : ``docker compose up``
+- Accedez à l'appli via http://localhost:80
 
 ### Fonctionnalité réalisées
 - Muhammet :
